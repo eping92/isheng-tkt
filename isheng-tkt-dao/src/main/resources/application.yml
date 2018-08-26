@@ -1,0 +1,24 @@
+##服务端口和项目名称
+server:
+  port: 9991
+  servlet:
+    context-path: /isheng-dao
+     
+# mybatis配置
+mybatis: 
+  type-aliases-package: com.isheng.model
+  mapper-locations: classpath*:com/isheng/dao/**/*Mapper.xml
+    
+# spring配置
+spring: 
+  application:
+    name: isheng-dao
+  profiles:
+    active: dev # 使用开发环境
+      
+      
+   
+    
+    
+  
+  

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.isheng</groupId>
+		<artifactId>isheng-tkt</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>isheng-tkt-web</artifactId>
+	<packaging>pom</packaging>
+	<name>isheng-tkt-web</name>
+	<description>web模块</description>
+	<modules>
+		<module>isheng-tkt-web-ticket</module>
+		<module>isheng-tkt-web-admin</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-common</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-model</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- web公用依赖的公用模块 -->
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.spring.boot</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+		<!-- test case -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

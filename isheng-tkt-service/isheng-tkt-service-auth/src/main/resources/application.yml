@@ -1,0 +1,19 @@
+##服务端口和项目名称
+server:
+  port: 9981
+  servlet:
+    context-path: /isheng-service-auth
+    
+# spring配置
+spring: 
+  application:
+    name: isheng-service-auth
+  profiles:
+    active: dev
+      
+      
+   
+    
+    
+  
+  

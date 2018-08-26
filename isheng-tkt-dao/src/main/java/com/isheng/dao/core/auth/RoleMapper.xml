@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.isheng.dao.core.auth.RoleMapper">
+	<resultMap id="RoleResultMap" type="com.isheng.model.auth.entity.Role" >
+		<id property="id" 				column="id"				jdbcType="NUMERIC"/>
+		<result property="createUser" 	column="createUser"		jdbcType="VARCHAR"/>
+		<result property="createTime"	column="createTime"		jdbcType="DATE"/>
+		<result property="updateUser"	column="updateUser"		jdbcType="VARCHAR"/>
+		<result property="updateTime"	column="updateTime"		jdbcType="DATE"/>
+		
+		<result property="name"			column="name"			jdbcType="VARCHAR"/>
+		<result property="desc"			column="desc"			jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="columnList">
+		id, 
+		createUser, 
+		createTime, 
+		updateUser, 
+		updateTime, 
+		name, 
+		desc
+	</sql>
+	
+	<!-- 动态查询条件 -->
+	<sql id="queryCondition">
+		<if test="id != null">
+			AND id=#{id}
+		</if>
+		<if test="name != null">
+			AND name=#{name}
+		</if>
+		<if test="beginDate != null">
+			AND createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+		</if>
+		<if test="endDate != null">
+			AND createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+		</if>
+	</sql>
+	
+	<insert id="insert" parameterType="com.isheng.model.auth.entity.Role">
+		INSERT INTO role
+			(<include refid="columnList"/>)
+		VALUES
+			(#{id}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}, #{name}, #{desc})
+	</insert>
+	
+	<!-- 删除及批量删除 -->
+	<delete id="delByIds" parameterType="Long[]">
+		DELETE FROM role WHERE id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultType="com.isheng.model.auth.entity.Role">
+		SELECT
+		<include refid="columnList" />
+		FROM role
+		<where>
+			id=#{id}
+		</where>
+	</select>
+	
+	<!-- 总记录数 -->
+	<select id="countByQuery" parameterType="com.isheng.model.auth.request.RoleQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM role
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="selectList" parameterType="com.isheng.model.auth.request.RoleQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM role
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectLimit" parameterType="com.isheng.model.auth.request.RoleQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM role
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+		LIMIT 
+			#{pageNo}, #{pageSize}
+	</select>
+	
+	<!-- 查询是否重复 -->
+	<select id="isExist" resultType="boolean" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM role
+		<where>
+			id=#{id} AND #{column}=#{value}
+		</where>
+	</select>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.isheng.model.auth.entity.Role" timeout="3000">
+		UPDATE role
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="createUser != null">
+				createUser=#{createUser},
+			</if>
+			<if test="createTime != null">
+				createTime=#{createTime},
+			</if>
+			<if test="updateUser != null">
+				updateUser=#{updateUser},
+			</if>
+			<if test="updateTime != null">
+				updateTime=#{updateTime},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="desc != null">
+				code=#{desc},
+			</if>
+		</trim>
+		<where>
+			id=#{id}
+		</where>
+	</update>
+</mapper>

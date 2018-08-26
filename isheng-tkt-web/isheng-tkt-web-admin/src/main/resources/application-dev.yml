@@ -1,0 +1,21 @@
+# 开发环境配置
+spring: 
+  profiles: dev
+    
+# 日志  
+logging: 
+  pattern:
+    level: 'DEBUG'   
+
+
+      
+    
+
+
+    
+  
+  
+
+      
+       
+     

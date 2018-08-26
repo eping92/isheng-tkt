@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.isheng.dao.core.auth.MenuMapper">
+	<resultMap id="MenuResultMap" type="com.isheng.model.auth.entity.Menu">
+		<id 	property="id" 			column="id" 			jdbcType="NUMERIC" />
+		<result property="createUser" 	column="createUser"		jdbcType="VARCHAR" />
+		<result property="createTime" 	column="createTime"		jdbcType="DATE" />
+		<result property="updateUser" 	column="updateUser"		jdbcType="VARCHAR" />
+		<result property="updateTime" 	column="updateTime"		jdbcType="DATE" />
+
+		<result property="name" 		column="name" 			jdbcType="VARCHAR" />
+		<result property="code" 		column="code" 			jdbcType="VARCHAR" />
+		<result property="url" 			column="url" 			jdbcType="VARCHAR" />
+		<result property="type" 		column="type"			typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result property="parentId" 	column="parentId"		jdbcType="INTEGER" />
+		<result property="sort" 		column="sort" 			jdbcType="NUMERIC" />
+	</resultMap>
+
+	<!-- 结果字段 -->
+	<sql id="columnList">
+		id,
+		createUser,
+		createTime,
+		updateUser,
+		updateTime,
+		name,
+		code,
+		url,
+		type,
+		parentId,
+		sort
+	</sql>
+	
+	<!-- 查询语句 -->
+	<sql id="queryCondition">
+		<if test="id != null">
+			AND id=#{id}
+		</if>
+		<if test="name != null">
+			AND name=#{name}
+		</if>
+		<if test="code != null">
+			AND code=#{code}
+		</if>
+		<if test="type != null">
+			AND menuType=#{type}
+		</if>
+		<if test="url != null">
+			AND url=#{url, jdbcType=VARCHAR}
+		</if>
+		<if test="parentId > 0">
+			AND parentId=#{parentId, jdbcType=NUMERIC}
+		</if>
+		<if test="beginDate != null">
+			AND createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+		</if>
+		<if test="endDate != null">
+			AND createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+		</if>
+	</sql>
+
+	<!-- 插入 -->
+	<insert id="insert">
+		INSERT INTO menu
+			(<include refid="columnList" />)
+		VALUES
+			(	#{id}, 
+				#{createUser}, 
+				#{createTime}, 
+				#{updateUser}, 
+				#{updateTime}, 
+				#{name},
+				#{code}, 
+				#{url}, 
+				#{type}, 
+				#{parentId}, 
+				#{sort} 
+			)
+	</insert>
+
+	<!-- 删除及批量删除 -->
+	<delete id="delByIds" parameterType="Long[]">
+		DELETE FROM menu WHERE id IN
+		<foreach item="id" collection="ids" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultType="com.isheng.model.auth.entity.Menu">
+		SELECT
+		<include refid="columnList" />
+		FROM menu
+		<where>
+			id=#{id}
+		</where>
+	</select>
+
+	<!-- 总记录数 -->
+	<select id="countByQuery" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM menu
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="selectList" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM menu
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectLimit" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM menu
+		<where>
+			<include refid="queryCondition"/>
+		</where>
+		LIMIT 
+			#{pageNo}, #{pageSize}
+	</select>
+	
+	<!-- 查询是否重复 -->
+	<select id="isExist" resultType="boolean" timeout="3000">
+		SELECT
+			COUNT(id)
+		FROM menu
+		<where>
+			id=#{id} AND #{column}=#{value}
+		</where>
+	</select>
+
+	<!-- 更新 -->
+	<update id="update" parameterType="com.isheng.model.auth.entity.Menu" timeout="3000">
+		UPDATE menu
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="createUser != null">
+				createUser=#{createUser},
+			</if>
+			<if test="createTime != null">
+				createTime=#{createTime},
+			</if>
+			<if test="updateUser != null">
+				updateUser=#{updateUser},
+			</if>
+			<if test="updateTime != null">
+				updateTime=#{updateTime},
+			</if>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="code != null">
+				code=#{code},
+			</if>
+			<if test="url != null">
+				url=#{url},
+			</if>
+			<if test="type != null">
+				type=#{type},
+			</if>
+			<if test="parentId > 0">
+				parentId=#{parentId},
+			</if>
+			<if test="sort > 0">
+				sort=#{sort},
+			</if>
+		</trim>
+		<where>
+			id=#{id}
+		</where>
+	</update>
+</mapper>

@@ -1,0 +1,29 @@
+# 开发环境配置
+spring: 
+  profiles: dev
+  
+  #duboo的配置文件 dubbo默认配置请不要提交
+  dubbo: 
+    appname: isheng-service-auth
+    group: dubbo
+    port: 20882
+    registry: zookeeper://127.0.0.1:2181
+    threads: 20
+    
+# 日志  
+logging: 
+  pattern:
+    level: 'INFO'   
+
+
+      
+    
+
+
+    
+  
+  
+
+      
+       
+     

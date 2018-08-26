@@ -1,0 +1,37 @@
+# 开发环境配置
+spring: 
+  profiles: dev
+  
+  ## 数据源配置
+  datasource:
+    name: isheng-tkt
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/isheng-tkt?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+  
+  #duboo的配置文件 dubbo默认配置请不要提交
+  dubbo: 
+    appname: isheng-dao
+    group: dubbo
+    port: 20881
+    registry: zookeeper://127.0.0.1:2181
+    threads: 20
+    
+# 日志  
+logging: 
+  pattern:
+    level: 'INFO'   
+
+
+      
+    
+
+
+    
+  
+  
+
+      
+       
+     

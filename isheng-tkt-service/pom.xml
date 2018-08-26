@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.isheng</groupId>
+		<artifactId>isheng-tkt</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>isheng-tkt-service</artifactId>
+	<packaging>pom</packaging>
+	<name>isheng-tkt-service</name>
+	<description>服务层模块</description>
+	<modules>
+		<module>isheng-tkt-service-auth</module>
+		<module>isheng-tkt-service-common</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-model</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-common</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-dao</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.isheng</groupId>
+				<artifactId>isheng-tkt-service-common</artifactId>
+				<version>${global.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- service依赖的公用模块 -->
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-dao</artifactId>
+			<exclusions>
+				<exclusion>
+		            <groupId>org.mybatis.spring.boot</groupId>
+		            <artifactId>mybatis-spring-boot-starter</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- spring boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- dubbo,zookeeper -->
+		<dependency>
+			<groupId>com.alibaba.spring.boot</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+
+		<!-- test case -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
