@@ -1,4 +1,0 @@
-[WARN ] 2018-08-26 10:56:10 [main] c.a.dubbo.config.AbstractConfig -  [DUBBO] NO method found in service interface com.isheng.service.auth.MenuService, dubbo version: 2.6.0, current host: 127.0.0.1
-[WARN ] 2018-08-26 10:56:10 [main] c.a.dubbo.config.AbstractConfig -  [DUBBO] NO method found in service interface com.isheng.service.auth.UserService, dubbo version: 2.6.0, current host: 127.0.0.1
-[WARN ] 2018-08-26 11:04:15 [main] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.isheng.service]' package. Please check your configuration.
-[WARN ] 2018-08-26 11:04:15 [main] o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server; nested exception is org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
