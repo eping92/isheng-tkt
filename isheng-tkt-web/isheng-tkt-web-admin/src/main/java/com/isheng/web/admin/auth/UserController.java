@@ -87,7 +87,8 @@ public class UserController {
 			return result.setResponse(ErrMsg.PARAM_NULL);
 		}
 		
-		user.setUpdateUser(updateUser);
+//		user.setUpdateUser(updateUser);
+		return result.setResponse(ErrMsg.SUCCESS);
 	}
 
 }
