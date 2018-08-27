@@ -19,6 +19,10 @@
 		<groupId>com.isheng</groupId>
 		<artifactId>isheng-tkt-model</artifactId>
 	</dependency>
+	<dependency>
+		<groupId>com.isheng</groupId>
+		<artifactId>isheng-tkt-service-auth</artifactId>
+	</dependency>
 
 	<dependency>
 		<groupId>org.springframework.boot</groupId>

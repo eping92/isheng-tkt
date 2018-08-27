@@ -1,4 +1,6 @@
-package com.isheng.security.shiro;
+package com.isheng.security.pojo;
+
+import com.isheng.security.common.AbstractUser;
 
 public class SessionUser extends AbstractUser {
 	

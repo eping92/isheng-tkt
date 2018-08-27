@@ -1,4 +1,4 @@
-package com.isheng.security.shiro;
+package com.isheng.security.pojo;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.isheng.security.shiro;
+package com.isheng.security.common;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
