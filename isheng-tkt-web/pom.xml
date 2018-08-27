@@ -19,15 +19,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- web依赖模块申明 -->
 			<dependency>
 				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-common</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-model</artifactId>
-				<version>${global.version}</version>
+				<artifactId>isheng-tkt-service-auth</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -18,7 +18,6 @@
 		<dependency>
 			<groupId>com.isheng</groupId>
 			<artifactId>isheng-tkt-service-auth</artifactId>
-			<version>${global.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.isheng</groupId>

@@ -13,7 +13,6 @@
   	<dependency>
   		<groupId>com.isheng</groupId>
  		<artifactId>isheng-tkt-common</artifactId>
- 		<version>${global.version}</version>
   	</dependency>
   </dependencies>
 </project>

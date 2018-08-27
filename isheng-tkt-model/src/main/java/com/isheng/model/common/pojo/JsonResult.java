@@ -53,12 +53,12 @@ public class JsonResult extends LinkedHashMap<String, Object> {
 
 	public boolean isSuccess() {
 		Object obj = get(CODE);
-		return null != obj && ErrMsg.SUCCESS.getCode() == (int) obj;
+		return null != obj && ErrMsg.SUCCESS.getCode() == (Integer) obj;
 	}
 
 	public int getCode() {
 		Object obj = get(CODE);
-		return null != obj ? (int) obj : ErrMsg.FAILED.getCode();
+		return null != obj ? (Integer) obj : ErrMsg.FAILED.getCode();
 	}
 
 	public JsonResult setCode(int code) {
