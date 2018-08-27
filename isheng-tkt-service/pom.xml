@@ -15,28 +15,14 @@
 		<module>isheng-tkt-service-auth</module>
 		<module>isheng-tkt-service-common</module>
 	</modules>
-
+	
 	<dependencyManagement>
+		<!-- service模块依赖的模块申明 -->
 		<dependencies>
 			<dependency>
 				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-model</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-common</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-dao</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
 				<artifactId>isheng-tkt-service-common</artifactId>
-				<version>${global.version}</version>
+				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

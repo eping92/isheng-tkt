@@ -11,21 +11,6 @@
 	<name>isheng-tkt-dao</name>
 	<description>dao模块</description>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-common</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-model</artifactId>
-				<version>${global.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<dependencies>
 		<dependency>
 			<groupId>com.isheng</groupId>
@@ -36,13 +21,10 @@
 			<artifactId>isheng-tkt-model</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
