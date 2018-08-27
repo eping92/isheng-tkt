@@ -80,6 +80,19 @@ public class JsonResult extends LinkedHashMap<String, Object> {
 		put(DATA, data);
 		return this;
 	}
+	
+	public JsonResult setResponse(ErrMsg errMsg) {
+		put(CODE, errMsg.getCode());
+		put(MSG, errMsg.getText());
+		return this;
+	}
+	
+	public JsonResult setResponse(ErrMsg errMsg, Map<String, Object> data) {
+		put(CODE, errMsg.getCode());
+		put(MSG, errMsg.getText());
+		put(DATA, data);
+		return this;
+	}
 
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getData() {
@@ -95,7 +108,7 @@ public class JsonResult extends LinkedHashMap<String, Object> {
 		data.put(key, value);
 		return this;
 	}
-
+	
 	public String toJson() {
 		return JSONObject.toJSONString(this);
 	}

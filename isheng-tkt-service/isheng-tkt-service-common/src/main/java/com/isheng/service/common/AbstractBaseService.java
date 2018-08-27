@@ -24,14 +24,15 @@ public class AbstractBaseService<T, K extends Serializable, Q extends BaseQuery>
 	@Override
 	public Response save(T entity) throws BizException {
 		Response resp = new Response();
-		if (null == entity)
+		if (null == entity) {
 			return resp.setResponse(ErrMsg.PARAM_NULL);
-		
+		}
 		long result = 0;
 		try {
 			result = baseDao.save(entity);
-			if (result <= 0)
+			if (result <= 0) {
 				return resp.setResponse(ErrMsg.FAILED);
+			}
 		} catch (Exception e) {
 			return resp.setResponse(ErrMsg.EXP_ADD);
 		}
