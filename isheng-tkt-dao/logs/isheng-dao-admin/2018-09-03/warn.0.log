@@ -1,0 +1,2 @@
+[WARN ] 2018-09-03 22:47:39 [New I/O server worker #1-1] c.a.d.r.transport.AbstractServer -  [DUBBO] All clients has discontected from /169.254.23.8:29991. You can graceful shutdown now., dubbo version: 2.6.0, current host: 127.0.0.1
+[WARN ] 2018-09-03 23:35:23 [New I/O server worker #1-1] c.a.d.r.transport.AbstractServer -  [DUBBO] All clients has discontected from /169.254.23.8:29991. You can graceful shutdown now., dubbo version: 2.6.0, current host: 127.0.0.1

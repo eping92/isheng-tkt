@@ -1,7 +1,7 @@
 package com.isheng.model.auth.request;
 
+import com.isheng.common.base.BaseQuery;
 import com.isheng.model.auth.enums.MenuType;
-import com.isheng.model.common.request.BaseQuery;
 
 public class MenuQuery extends BaseQuery {
 

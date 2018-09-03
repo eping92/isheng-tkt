@@ -1,9 +1,15 @@
 package com.isheng.dao.service.seq;
 
-
-import com.isheng.model.common.exception.BizException;
+import com.isheng.common.exception.BizException;
 import com.isheng.model.seq.entity.Seq;
 
+/**
+ * 序列dao
+ *
+ *
+ * @author Administrator
+ * @version $Id: SeqDao.java 2018年9月1日 下午6:52:21 $
+ */
 public interface SeqDao {
 	
 	/**

@@ -12,9 +12,22 @@
 	<description>权限管理模块</description>
 
 	<dependencies>
+		<!-- shiro -->
 		<dependency>
-			<groupId>com.isheng</groupId>
-			<artifactId>isheng-tkt-service-common</artifactId>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
 		</dependency>
 	</dependencies>
 </project>

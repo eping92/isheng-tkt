@@ -1,8 +1,8 @@
 package com.isheng.model.auth.request;
 
+import com.isheng.common.base.BaseQuery;
+import com.isheng.common.enums.Gender;
 import com.isheng.model.auth.enums.UserStatus;
-import com.isheng.model.common.enums.Gender;
-import com.isheng.model.common.request.BaseQuery;
 
 /**
  * user query condition

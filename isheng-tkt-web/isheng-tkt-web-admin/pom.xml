@@ -18,12 +18,6 @@
 		<dependency>
 			<groupId>com.isheng</groupId>
 			<artifactId>isheng-tkt-service-auth</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.isheng</groupId>
-					<artifactId>isheng-tkt-dao</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 

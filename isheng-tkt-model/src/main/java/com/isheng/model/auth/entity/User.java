@@ -2,9 +2,9 @@ package com.isheng.model.auth.entity;
 
 import java.util.List;
 
+import com.isheng.common.base.BaseEntity;
+import com.isheng.common.enums.Gender;
 import com.isheng.model.auth.enums.UserStatus;
-import com.isheng.model.common.entity.BaseEntity;
-import com.isheng.model.common.enums.Gender;
 
 /**
  * 后台管理系统用户

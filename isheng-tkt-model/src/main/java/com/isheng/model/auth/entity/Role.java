@@ -1,6 +1,6 @@
 package com.isheng.model.auth.entity;
 
-import com.isheng.model.common.entity.BaseEntity;
+import com.isheng.common.base.BaseEntity;
 
 public class Role extends BaseEntity {
 

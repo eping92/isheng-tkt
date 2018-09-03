@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import com.isheng.common.enums.ErrMsg;
-import com.isheng.dao.core.seq.SeqMapper;
+import com.isheng.common.exception.BizException;
+import com.isheng.dao.mapper.seq.SeqMapper;
 import com.isheng.dao.service.seq.SeqDao;
-import com.isheng.model.common.exception.BizException;
 import com.isheng.model.seq.constant.SeqConstant;
 import com.isheng.model.seq.entity.Seq;
 

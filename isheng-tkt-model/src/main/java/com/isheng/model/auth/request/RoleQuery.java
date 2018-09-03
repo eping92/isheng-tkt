@@ -1,6 +1,6 @@
 package com.isheng.model.auth.request;
 
-import com.isheng.model.common.request.BaseQuery;
+import com.isheng.common.base.BaseQuery;
 
 public class RoleQuery extends BaseQuery {
 
