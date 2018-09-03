@@ -1,5 +1,7 @@
 package com.isheng.common.enums;
 
+import com.isheng.common.base.BaseEnum;
+
 public enum ErrMsg implements BaseEnum {
 	
 	FAILED(-1, "操作失败"),

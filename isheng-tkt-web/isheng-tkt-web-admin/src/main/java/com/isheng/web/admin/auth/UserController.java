@@ -1,29 +1,27 @@
 package com.isheng.web.admin.auth;
 
 import java.util.concurrent.Callable;
-
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.enums.ErrMsg;
+import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.entity.User;
 import com.isheng.model.auth.request.UserQuery;
-import com.isheng.model.common.exception.BizException;
-import com.isheng.model.common.pojo.JsonResult;
-import com.isheng.model.common.pojo.Response;
 import com.isheng.service.auth.UserService;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Reference
 	private UserService userService;
@@ -34,61 +32,93 @@ public class UserController {
 		return new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				return userService.paging(userQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+				return userService.getPaging(userQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
 			}
 		};
 	}
 	
 	@ResponseBody
-	@RequestMapping("/add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(User user) {
-		JsonResult result = new JsonResult();
+		ResultModel result = new ResultModel();
 		if (null == user) {
-			return result.setResponse(ErrMsg.PARAM_NULL);
+			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		try {
-			Response resp = userService.save(user);
-			if (!resp.isSuccess()) {
-				return result.setCode(resp.getCode()).setMsg(resp.getMsg());
+			String id = userService.add(user);
+			if (StringUtils.isBlank(id)) {
+				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			LOG.error("add user exception：", e.getMessage());
-			throw new BizException(ErrMsg.EXP_ADD);
+			logger.error("add user exception：", e.getMessage());
+			return result.setResult(ErrMsg.EXP_ADD);
 		}
-		
-		return result.setResponse(ErrMsg.SUCCESS);
+		return result.setResult(ErrMsg.SUCCESS);
 	}
 	
 	@ResponseBody
 	@RequestMapping("/delete")
-	public Object delete(Long...ids) {
-		JsonResult result = new JsonResult();
-		if (ObjUtil.isNull(ids)) {
-			return result.setResponse(ErrMsg.PARAM_NULL);
+	public Object delete(String id) {
+		ResultModel result = new ResultModel();
+		if (StringUtils.isBlank(id)) {
+			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		
 		try {
-			Response resp = userService.batchDelByIds((Long[])ids);
-			if (!resp.isSuccess()) {
-				return result.setCode(resp.getCode()).setMsg(resp.getMsg());
+			int count = userService.deleteById(id);
+			if (count <= 0) {
+				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			LOG.error("delete user by ids exception:ids={}, msg={}", ids, e.getMessage());
-			throw new BizException(ErrMsg.EXP_DEL);
+			logger.error("delete user by ids exception:id={}, msg={}", id, e.getMessage());
+			return result.setResult(ErrMsg.EXP_DEL);
 		} 
-		return result.setResponse(ErrMsg.SUCCESS);
+		return result.setResult(ErrMsg.SUCCESS);
 	}
 	
 	@ResponseBody
-	@RequestMapping("/update")
+	@RequestMapping("/detail")
+	public Object detail(String id) {
+		ResultModel result = new ResultModel();
+		if (StringUtils.isBlank(id)) {
+			return result.setResult(ErrMsg.PARAM_NULL);
+		}
+		
+		User user = null;
+		try {
+			user = userService.getById(id);
+			if (null == user) {
+				return result.setResult(ErrMsg.FAILED);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("query user by id exception:id={}, msg={}", id, e.getMessage());
+			return result.setResult(ErrMsg.EXP_QUERY);
+		} 
+		
+		return result.setResult(ErrMsg.SUCCESS).addData("user", user);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(User user) {
-		JsonResult result = new JsonResult();
+		ResultModel result = new ResultModel();
 		if (ObjUtil.isNotNull(user)) {
-			return result.setResponse(ErrMsg.PARAM_NULL);
+			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		
 //		user.setUpdateUser(updateUser);
-		return result.setResponse(ErrMsg.SUCCESS);
+		
+		try {
+			int count = userService.update(user);
+			if (count <= 0) {
+				return result.setResult(ErrMsg.FAILED);
+			}
+		} catch (Exception e) {
+			logger.error("update user exception:id={}, msg={}", user.getId(), e.getMessage());
+			return result.setResult(ErrMsg.EXP_UP);
+		} 
+		return result.setResult(ErrMsg.SUCCESS);
 	}
 
 }

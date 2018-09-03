@@ -14,7 +14,7 @@ spring:
   dubbo: 
     appname: isheng-dao
     group: dubbo
-    port: 20881
+    port: 29991
     registry: zookeeper://127.0.0.1:2181
     threads: 20
     

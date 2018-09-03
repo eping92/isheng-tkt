@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.isheng.dao.mapper.seq.SeqMapper">
+	<resultMap id="SeqResultMap" type="com.isheng.model.seq.entity.Seq" >
+		<id property="id" 				column="id"				jdbcType="VARCHAR"/>
+		<result property="seq" 			column="seq"			jdbcType="NUMERIC"/>
+		<result property="updateTime"	column="updateTime"		jdbcType="DATE"/>
+	</resultMap>
+	
+	<sql id="columnList">
+		id, seq, updateTime
+	</sql>
+	
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO seq 
+			(id, seq, updateTime)
+		VALUES 
+			(#{id}, #{seq}, #{updateTime})
+	</insert>
+	
+	<select id="getById" parameterType="String" resultType="com.isheng.model.seq.entity.Seq">
+		SELECT 
+			<include refid="columnList"/>
+		FROM seq 
+			<where>
+				id=#{id}
+			</where>
+	</select>
+	
+	<update id="update" parameterType="com.isheng.model.seq.entity.Seq" timeout="3000">
+		UPDATE seq
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="updateTime != null">
+					updateTime=#{updateTime},
+				</if>
+				<if test="seq != null">
+					seq=#{seq},
+				</if>
+			</trim>
+			<where>
+				id=#{id}
+			</where>
+	</update>
+</mapper>

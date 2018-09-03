@@ -41,7 +41,6 @@
 		<module>isheng-tkt-dao</module>
 		<module>isheng-tkt-web</module>
 		<module>isheng-tkt-service</module>
-		<module>isheng-tkt-security</module>
 	</modules>
 	
 	<dependencyManagement>
@@ -72,12 +71,6 @@
 				<artifactId>isheng-tkt-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-security</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		
 		
 			<dependency>
 				<groupId>com.alibaba</groupId>
@@ -149,20 +142,6 @@
 				<groupId>org.apache.shiro</groupId>
 				<artifactId>shiro-ehcache</artifactId>
 				<version>${shiro.version}</version>
-			</dependency>
-
-			<!-- beetle模版 -->
-			<dependency>
-				<groupId>com.ibeetl</groupId>
-				<artifactId>beetl</artifactId>
-				<version>${beetle.version}</version>
-			</dependency>
-			<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet.version}</version>
-				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

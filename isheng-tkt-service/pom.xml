@@ -13,25 +13,23 @@
 	<description>服务层模块</description>
 	<modules>
 		<module>isheng-tkt-service-auth</module>
-		<module>isheng-tkt-service-common</module>
 	</modules>
-	
-	<dependencyManagement>
-		<!-- service模块依赖的模块申明 -->
-		<dependencies>
-			<dependency>
-				<groupId>com.isheng</groupId>
-				<artifactId>isheng-tkt-service-common</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<dependencies>
 		<!-- service依赖的公用模块 -->
 		<dependency>
 			<groupId>com.isheng</groupId>
 			<artifactId>isheng-tkt-common</artifactId>
+			<exclusions>
+				<exclusion>
+		            <groupId>org.mybatis.spring.boot</groupId>
+		            <artifactId>mybatis-spring-boot-starter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.isheng</groupId>
@@ -45,46 +43,11 @@
 		            <groupId>org.mybatis.spring.boot</groupId>
 		            <artifactId>mybatis-spring-boot-starter</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<!-- spring boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-
-		<!-- dubbo,zookeeper -->
-		<dependency>
-			<groupId>com.alibaba.spring.boot</groupId>
-			<artifactId>dubbo-spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.zookeeper</groupId>
-			<artifactId>zookeeper</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.101tec</groupId>
-			<artifactId>zkclient</artifactId>
-		</dependency>
-
-		<!-- test case -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

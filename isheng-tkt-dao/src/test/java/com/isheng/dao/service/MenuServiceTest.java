@@ -3,17 +3,12 @@ package com.isheng.dao.service;
 import java.util.Date;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.isheng.dao.DaoApplication;
+import com.isheng.dao.BaseTest;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
-
-import junit.framework.TestCase;
 
 /**
  * Menu测试类
@@ -22,9 +17,7 @@ import junit.framework.TestCase;
  * @author Administrator
  * @version $Id: MenuServiceTest.java 2018年7月28日 下午9:43:45 $
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {DaoApplication.class})
-public class MenuServiceTest extends TestCase {
+public class MenuServiceTest extends BaseTest {
 	
 	@Reference
 	private MenuDao menuDao;
@@ -42,8 +35,8 @@ public class MenuServiceTest extends TestCase {
 		entity.setUpdateTime(new Date());
 		entity.setUpdateUser("我自己");
 		entity.setUrl("/menu/add");
-		long result = menuDao.save(entity);
-		System.out.println("result = " + result);
+		String id = menuDao.save(entity);
+		System.out.println("id = " + id);
 	}
 
 }

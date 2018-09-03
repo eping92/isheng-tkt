@@ -6,7 +6,7 @@ spring:
   dubbo: 
     appname: isheng-service-auth
     group: dubbo
-    port: 20882
+    port: 29981
     registry: zookeeper://127.0.0.1:2181
     threads: 20
     

@@ -2,7 +2,7 @@ package com.isheng.common.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.isheng.common.constant.SysConstants;
+import com.isheng.common.constant.SysConfig;
 
 public class WebUtil {
 	
@@ -27,10 +27,10 @@ public class WebUtil {
 	}
 	
 	public static String getAgent (HttpServletRequest req) {
-		String agent = SysConstants.CLIENT_ANDORID;
-		String head = req.getHeader(SysConstants.AGENT_UA);
+		String agent = SysConfig.CLIENT_ANDORID;
+		String head = req.getHeader(SysConfig.AGENT_UA);
 		if ("os".equalsIgnoreCase(head)) {
-			agent = SysConstants.CLIENT_IOS;
+			agent = SysConfig.CLIENT_IOS;
 		}
 		return agent;
 	}
