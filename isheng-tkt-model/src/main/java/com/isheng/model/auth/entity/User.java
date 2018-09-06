@@ -1,7 +1,6 @@
 package com.isheng.model.auth.entity;
 
 import java.util.List;
-
 import com.isheng.common.base.BaseEntity;
 import com.isheng.common.enums.Gender;
 import com.isheng.model.auth.enums.UserStatus;
