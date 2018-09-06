@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.isheng.common.base.AbstractBaseDao;
 import com.isheng.common.base.BaseMapper;
+import com.isheng.common.exception.BizException;
+import com.isheng.common.idgen.IdGenerate;
 import com.isheng.dao.mapper.auth.RoleMapper;
 import com.isheng.dao.service.auth.RoleDao;
 import com.isheng.model.auth.entity.Role;
@@ -22,5 +24,10 @@ public class RoleDaoImpl extends AbstractBaseDao<Role, RoleQuery> implements Rol
 		return roleMapper;
 	}
 
+	@Override
+	public String save(Role entity) throws BizException {
+		entity.setId(IdGenerate.nextId());
+		return roleMapper.insert(entity);
+	}
 	
 }
