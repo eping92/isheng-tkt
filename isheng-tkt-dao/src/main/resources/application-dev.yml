@@ -3,11 +3,12 @@ spring:
   profiles: dev
   
   ## 数据源配置
+  ## serverTimezone=UTC解决mysql报时间相关的错误
   datasource:
     name: isheng-tkt
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/isheng-tkt?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/isheng-tkt?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver
   
   #duboo的配置文件 dubbo默认配置请不要提交

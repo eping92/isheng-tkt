@@ -19,7 +19,7 @@ public interface BaseMapper <T, Q extends BaseQuery>{
 	 * @param entity
 	 * @return
 	 */
-	String insert(T entity);
+	int insert(T entity);
 	
 	/**
 	 * 按主键删除
