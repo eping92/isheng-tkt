@@ -14,7 +14,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<result property="code" 		column="code" 			jdbcType="VARCHAR" />
 		<result property="url" 			column="url" 			jdbcType="VARCHAR" />
 		<result property="type" 		column="type"			typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
-		<result property="parentId" 	column="parentId"		jdbcType="INTEGER" />
+		<result property="parentId" 	column="parentId"		jdbcType="VARCHAR" />
 		<result property="sort" 		column="sort" 			jdbcType="NUMERIC" />
 	</resultMap>
 
@@ -62,7 +62,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</sql>
 
 	<!-- 插入 -->
-	<insert id="insert">
+	<insert id="insert" parameterType="com.isheng.model.auth.entity.Menu">
 		INSERT INTO menu
 			(<include refid="columnList" />)
 		VALUES

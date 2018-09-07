@@ -1,8 +1,8 @@
 package com.isheng.common.base;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import com.isheng.common.idgen.IdGenerate;
 
 /**
@@ -64,6 +64,22 @@ public class BaseEntity implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	
+	public String getCreateTimeText() {
+		if (null != createTime) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			return sdf.format(createTime);
+		}
+		return "";
+	}
+	
+	public String getUpdateTimeText() {
+		if (null != updateTime) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			return sdf.format(updateTime);
+		}
+		return "";
 	}
 
 	@Override

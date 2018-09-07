@@ -18,7 +18,7 @@ public interface BaseDao<T, Q extends BaseQuery> {
 	 * @param entity
 	 * @return
 	 */
-	String save(T entity) throws BizException;
+	int save(T entity) throws BizException;
 	
 	/**
 	 * 按主键删除

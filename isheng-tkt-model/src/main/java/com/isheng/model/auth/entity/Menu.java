@@ -22,7 +22,7 @@ public class Menu extends BaseEntity {
 
 	private MenuType type;
 
-	private long parentId;
+	private String parentId;
 
 	private int sort;
 
@@ -58,11 +58,11 @@ public class Menu extends BaseEntity {
 		this.type = type;
 	}
 
-	public long getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(long parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 

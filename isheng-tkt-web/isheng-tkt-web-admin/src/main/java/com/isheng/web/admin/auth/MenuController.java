@@ -50,6 +50,7 @@ public class MenuController {
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error("add menu exception：", e.getMessage());
 			return result.setResult(ErrMsg.EXP_ADD);
 		}
@@ -120,5 +121,4 @@ public class MenuController {
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
-
 }
