@@ -14,7 +14,9 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 	protected abstract BaseMapper<T, Q> getMapper();
 
 	@Override
-	public abstract String save(T entity) throws BizException ;
+	public String save(T entity) throws BizException {
+		return this.getMapper().insert(entity);
+	};
 
 	@Override
 	public int deleteById(String id) throws BizException {

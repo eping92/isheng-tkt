@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.isheng.common.base.AbstractBaseDao;
 import com.isheng.common.base.BaseMapper;
-import com.isheng.common.exception.BizException;
-import com.isheng.common.idgen.IdGenerate;
 import com.isheng.dao.mapper.auth.UserMapper;
 import com.isheng.dao.service.auth.UserDao;
 import com.isheng.model.auth.entity.User;
@@ -22,12 +20,6 @@ public class UserDaoImpl extends AbstractBaseDao<User, UserQuery> implements Use
 	@Override
 	protected BaseMapper<User, UserQuery> getMapper() {
 		return userMapper;
-	}
-
-	@Override
-	public String save(User entity) throws BizException {
-		entity.setId(IdGenerate.nextId());
-		return userMapper.insert(entity);
 	}
 
 }

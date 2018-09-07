@@ -1,8 +1,11 @@
 package com.isheng.common.base;
 
+import java.util.Date;
 import java.util.List;
 import com.isheng.common.exception.BizException;
+import com.isheng.common.idgen.IdGenerate;
 import com.isheng.common.model.Page;
+import com.isheng.common.util.ReflexUtil;
 
 /**
  * 基础抽象服务类
@@ -22,6 +25,8 @@ public abstract class AbstractBaseService<T, Q extends BaseQuery> implements Bas
 
 	@Override
 	public String add(T entity) throws BizException {
+		ReflexUtil.setFieldValue(entity, "id", IdGenerate.nextId());//通过反射设置id
+		ReflexUtil.setFieldValue(entity, "createTime", new Date());//通过反射设置createTime
 		return this.getDao().save(entity);
 	}
 
@@ -32,6 +37,7 @@ public abstract class AbstractBaseService<T, Q extends BaseQuery> implements Bas
 
 	@Override
 	public int update(T entity) throws BizException {
+		ReflexUtil.setFieldValue(entity, "updateTime", new Date());
 		return this.getDao().update(entity);
 	}
 
