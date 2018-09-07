@@ -3,7 +3,6 @@ package com.isheng.common.base;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.isheng.common.idgen.IdGenerate;
 
 /**
  * 基础entity
@@ -16,7 +15,7 @@ public class BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -2399738930327105420L;
 
-	private String id = IdGenerate.nextId();
+	private String id;
 
 	private String createUser;
 
