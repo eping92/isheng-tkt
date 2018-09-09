@@ -20,7 +20,7 @@
 			<artifactId>isheng-tkt-service-auth</artifactId>
 		</dependency>
 	</dependencies>
-
+	
 	<build>
 		<finalName>isheng-tkt-web-admin</finalName>
 	</build>

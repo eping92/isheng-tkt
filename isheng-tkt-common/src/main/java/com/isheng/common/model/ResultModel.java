@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.isheng.common.enums.ErrMsg;
+import com.isheng.common.exception.BizException;
 
 /**
  * 用于前端页面返回数据
@@ -95,6 +96,12 @@ public class ResultModel extends LinkedHashMap<String, Object> {
 		put(CODE, resp.getCode());
 		put(MSG, resp.getMsg());
 		put(DATA, resp.getData());
+		return this;
+	}
+	
+	public ResultModel setResult(BizException be) {
+		put(CODE, be.getCode());
+		put(MSG, be.getMessage());
 		return this;
 	}
 	

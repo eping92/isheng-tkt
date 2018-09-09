@@ -76,4 +76,12 @@ public interface BaseService <T, Q extends BaseQuery>{
 	 * @throws BizException
 	 */
 	Page<T> getPaging(Q query, int pageNo, int pageSize) throws BizException;
+	
+	/**
+	 * 查询指定的值是否有相同
+	 * @param value
+	 * @param id
+	 * @return
+	 */
+	boolean isExist(String id, String column, Object value) throws BizException;
 }

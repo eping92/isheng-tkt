@@ -1,6 +1,5 @@
 package com.isheng.model.auth.entity;
 
-import java.util.List;
 import com.isheng.common.base.BaseEntity;
 import com.isheng.common.enums.Gender;
 import com.isheng.model.auth.enums.UserStatus;
@@ -38,9 +37,7 @@ public class User extends BaseEntity {
 	private String deptName;
 
 	private UserStatus userStatus;
-
-	private List<Role> roleList;
-
+	
 	public String getLoginName() {
 		return loginName;
 	}
@@ -137,20 +134,15 @@ public class User extends BaseEntity {
 		this.userStatus = userStatus;
 	}
 
-	public List<Role> getRoleList() {
-		return roleList;
-	}
-
-	public void setRoleList(List<Role> roleList) {
-		this.roleList = roleList;
-	}
-
+	/** 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "User [loginName=" + loginName + ", nick=" + nick + ", realName=" + realName + ", headPath=" + headPath
 				+ ", pwd=" + pwd + ", mobile=" + mobile + ", gender=" + gender + ", companyId=" + companyId
 				+ ", companyName=" + companyName + ", deptId=" + deptId + ", deptName=" + deptName + ", userStatus="
-				+ userStatus + ", roleList=" + roleList + "]";
+				+ userStatus + "]";
 	}
 
 }

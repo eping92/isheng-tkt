@@ -14,9 +14,9 @@ public class MenuQuery extends BaseQuery {
 
 	private String url;
 
-	private MenuType type;
+	private MenuType menuType;
 
-	private long parentId;
+	private String parentId;
 
 	public String getName() {
 		return name;
@@ -42,26 +42,21 @@ public class MenuQuery extends BaseQuery {
 		this.url = url;
 	}
 
-	public MenuType getType() {
-		return type;
+	public MenuType getMenuType() {
+		return menuType;
 	}
 
-	public void setType(MenuType type) {
-		this.type = type;
+	public void setMenuType(MenuType menuType) {
+		this.menuType = menuType;
 	}
 
-	public long getParentId() {
+	public String getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(long parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
-	@Override
-	public String toString() {
-		return "MenuQuery [name=" + name + ", code=" + code + ", url=" + url + ", type=" + type + ", parentId="
-				+ parentId + "]";
-	}
-
+	
 }

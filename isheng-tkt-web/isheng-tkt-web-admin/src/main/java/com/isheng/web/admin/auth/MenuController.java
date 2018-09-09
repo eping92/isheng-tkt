@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.enums.ErrMsg;
+import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.entity.Menu;
+import com.isheng.model.auth.enums.MenuType;
 import com.isheng.model.auth.request.MenuQuery;
 import com.isheng.service.auth.MenuService;
 
@@ -41,20 +43,21 @@ public class MenuController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(Menu menu) {
 		ResultModel result = new ResultModel();
-		if (null == menu) {
-			return result.setResult(ErrMsg.PARAM_NULL);
-		}
+		
+		String id = "";
 		try {
-			String id = menuService.add(menu);
+			this.validate(menu);
+			
+			id = menuService.add(menu);
 			if (StringUtils.isBlank(id)) {
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("add menu exception：", e.getMessage());
-			return result.setResult(ErrMsg.EXP_ADD);
+			logger.error("菜单添加异常,menu={},exception={}", menu, e);
+			throw e;
 		}
-		return result.setResult(ErrMsg.SUCCESS);
+		
+		return result.setResult(ErrMsg.SUCCESS).addData("id", id);
 	}
 	
 	@ResponseBody
@@ -71,8 +74,8 @@ public class MenuController {
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			logger.error("delete menu by ids exception:id={}, msg={}", id, e.getMessage());
-			return result.setResult(ErrMsg.EXP_DEL);
+			logger.error("菜单删除失败,id={},exception={}", id, e);
+			throw e;
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
@@ -81,20 +84,15 @@ public class MenuController {
 	@RequestMapping("/detail")
 	public Object detail(String id) {
 		ResultModel result = new ResultModel();
-		if (StringUtils.isBlank(id)) {
-			return result.setResult(ErrMsg.PARAM_NULL);
-		}
-		
 		Menu menu = null;
 		try {
 			menu = menuService.getById(id);
 			if (null == menu) {
 				return result.setResult(ErrMsg.FAILED);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("query menu by id exception:id={}, msg={}", id, e.getMessage());
-			return result.setResult(ErrMsg.EXP_QUERY);
+		}  catch (Exception e) {
+			logger.error("菜单查询失败,id={},exception={}", id, e);
+			throw e;
 		} 
 		
 		return result.setResult(ErrMsg.SUCCESS).addData("menu", menu);
@@ -104,21 +102,61 @@ public class MenuController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(Menu menu) {
 		ResultModel result = new ResultModel();
-		if (ObjUtil.isNotNull(menu)) {
-			return result.setResult(ErrMsg.PARAM_NULL);
-		}
-		
 //		menu.setUpdatemenu(updatemenu);
 		
 		try {
+			this.validate(menu);
+			
 			int count = menuService.update(menu);
 			if (count <= 0) {
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			logger.error("update menu exception:id={}, msg={}", menu.getId(), e.getMessage());
-			return result.setResult(ErrMsg.EXP_UP);
+			logger.error("菜单更新异常,menu={},exception={}", menu, e);
+			throw e;
 		} 
+		
 		return result.setResult(ErrMsg.SUCCESS);
+	}
+	
+	/**
+	 * 获取下一个ID
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/nextSort")
+	public Object nextSort(final String parentId, final MenuType menuType) {
+		ResultModel result = new ResultModel();
+		if (null == menuType) {
+			return result.setCode(ErrMsg.PARAM_NULL.getCode()).setMsg("菜单类型为空");
+		}
+		long sort = 0;
+		try {
+			sort = menuService.getNextSort(parentId, menuType);
+			if (sort <= 0) {
+				sort = 1;
+			}
+		}  catch (Exception e) {
+			logger.error("菜单排序号获取异常:parentId={}, menuType={}", parentId, menuType);
+			throw e;
+		}
+		return result.setResult(ErrMsg.SUCCESS).addData("sort", sort);
+	}
+	
+	/**
+	 * 参数校验
+	 * 
+	 * @param menu
+	 * @throws BizException
+	 */
+	private void validate(Menu menu) throws BizException {
+		if (null == menu) {
+			throw new BizException(ErrMsg.PARAM_NULL);
+		}
+		if (null == menu.getMenuType()) {
+			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "类型不能为空");
+		}
+		if (ObjUtil.isNull(menu.getName())) {
+			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "名称不能为空");
+		}
 	}
 }

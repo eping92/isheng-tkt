@@ -22,7 +22,7 @@ spring:
 # 日志  
 logging: 
   pattern:
-    level: 'INFO'   
+    level: debug   
 
 
       

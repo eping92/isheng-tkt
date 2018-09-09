@@ -21,5 +21,13 @@ public class SysConfig {
 	public static final String CLIENT_ANDORID = "Andorid";
 	
 	public static final String CLIENT_IOS = "Ios";
+	
+	/** 登录用户存储在session中的key */
+	public static final String SESSION_USER_KEY = "SESSION_USER";
+	
+	/** header中设置的session状态key */
+	public static final String SESSION_STATUS_KEY = "sessionStatus";
+	
+	public static final String PERMISSIONS = "PERMISSIONS";
 
 }

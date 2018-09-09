@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.isheng</groupId>
+		<artifactId>isheng-tkt</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>isheng-tkt-security</artifactId>
+	<name>isheng-tkt-security</name>
+	<description>安全模块</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-common</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis.spring.boot</groupId>
+					<artifactId>mybatis-spring-boot-starter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-service-auth</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis.spring.boot</groupId>
+					<artifactId>mybatis-spring-boot-starter</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.isheng</groupId>
+			<artifactId>isheng-tkt-model</artifactId>
+		</dependency>
+
+		<!-- shiro -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+		</dependency>
+	</dependencies>
+</project>

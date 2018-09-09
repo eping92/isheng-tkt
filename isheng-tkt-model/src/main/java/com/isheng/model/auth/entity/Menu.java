@@ -20,11 +20,14 @@ public class Menu extends BaseEntity {
 
 	private String url;
 
-	private MenuType type;
+	private MenuType menuType;
 
 	private String parentId;
 
-	private int sort;
+	private long sort;
+	
+	/** 页面是否被选中 */
+	private transient boolean checked;
 
 	public String getName() {
 		return name;
@@ -50,12 +53,12 @@ public class Menu extends BaseEntity {
 		this.url = url;
 	}
 
-	public MenuType getType() {
-		return type;
+	public MenuType getMenuType() {
+		return menuType;
 	}
 
-	public void setType(MenuType type) {
-		this.type = type;
+	public void setMenuType(MenuType menuType) {
+		this.menuType = menuType;
 	}
 
 	public String getParentId() {
@@ -66,18 +69,28 @@ public class Menu extends BaseEntity {
 		this.parentId = parentId;
 	}
 
-	public int getSort() {
+	public long getSort() {
 		return sort;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(long sort) {
 		this.sort = sort;
 	}
-
-	@Override
-	public String toString() {
-		return "Menu [name=" + name + ", code=" + code + ", url=" + url + ", type=" + type + ", parentId=" + parentId
-				+ ", sort=" + sort + "]";
+	
+	public boolean isChecked() {
+		return checked;
 	}
 
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
+	/** 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Menu [name=" + name + ", code=" + code + ", url=" + url + ", menuType=" + menuType + ", parentId="
+				+ parentId + ", sort=" + sort + ", checked=" + checked + "]";
+	}
 }

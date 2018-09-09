@@ -77,4 +77,11 @@ public abstract class AbstractBaseService<T, Q extends BaseQuery> implements Bas
 		
 	}
 
+	@Override
+	public boolean isExist(String id, String column, Object value) throws BizException {
+		return this.getDao().isExist(id, column, value);
+	}
+	
+	
+
 }

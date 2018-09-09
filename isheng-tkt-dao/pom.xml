@@ -20,13 +20,6 @@
 			<groupId>com.isheng</groupId>
 			<artifactId>isheng-tkt-model</artifactId>
 		</dependency>
-
-		<!-- test case -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>

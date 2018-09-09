@@ -1,5 +1,6 @@
 package com.isheng.common.model;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -11,7 +12,10 @@ import java.util.List;
  * @author Administrator
  * @version $Id: Page.java 2018年8月18日 下午11:06:11 $
  */
-public class Page<T> {
+public class Page<T> implements Serializable{
+
+	/**  */
+	private static final long serialVersionUID = -3642028310384505741L;
 
 	/** 当前第几页 */
 	int pageNo;

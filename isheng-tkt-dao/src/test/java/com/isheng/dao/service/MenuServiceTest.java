@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
-import com.isheng.dao.BaseTest;
+import com.isheng.common.base.BaseTest;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
@@ -32,7 +32,7 @@ public class MenuServiceTest extends BaseTest {
 		entity.setName("增加权限");
 		entity.setParentId("");
 		entity.setSort(2);
-		entity.setType(MenuType.BUTTON);
+		entity.setMenuType(MenuType.BUTTON);
 		entity.setUpdateTime(new Date());
 		entity.setUpdateUser("我自己");
 		entity.setUrl("/menu/add");

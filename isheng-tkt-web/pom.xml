@@ -77,11 +77,5 @@
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 		</dependency>
-		<!-- test case -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>

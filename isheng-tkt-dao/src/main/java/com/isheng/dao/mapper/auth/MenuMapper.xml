@@ -3,7 +3,7 @@
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.isheng.dao.mapper.auth.MenuMapper">
-	<resultMap id="MenuResultMap" type="com.isheng.model.auth.entity.Menu">
+	<resultMap id="resultMap" type="com.isheng.model.auth.entity.Menu">
 		<id 	property="id" 			column="id" 			jdbcType="VARCHAR" />
 		<result property="createUser" 	column="createUser"		jdbcType="VARCHAR" />
 		<result property="createTime" 	column="createTime"		jdbcType="DATE" />
@@ -13,131 +13,90 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<result property="name" 		column="name" 			jdbcType="VARCHAR" />
 		<result property="code" 		column="code" 			jdbcType="VARCHAR" />
 		<result property="url" 			column="url" 			jdbcType="VARCHAR" />
-		<result property="type" 		column="type"			typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result property="menuType" 	column="menuType"		typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
 		<result property="parentId" 	column="parentId"		jdbcType="VARCHAR" />
 		<result property="sort" 		column="sort" 			jdbcType="NUMERIC" />
 	</resultMap>
-
+	
 	<!-- 结果字段 -->
 	<sql id="columnList">
-		id,
-		createUser,
-		createTime,
-		updateUser,
-		updateTime,
-		name,
-		code,
-		url,
-		type,
-		parentId,
-		sort
+		id, createUser, createTime, updateUser, updateTime, name, code, url, menuType, parentId, sort
 	</sql>
 	
 	<!-- 查询语句 -->
 	<sql id="queryCondition">
-		<if test="id != null">
-			AND id=#{id}
+		<if test="id != null and id != ''">
+			AND t.id = #{id}
 		</if>
-		<if test="name != null">
-			AND name=#{name}
+		<if test="name != null and name != ''">
+			AND t.name LIKE CONCAT('%', #{name}, '%')
 		</if>
-		<if test="code != null">
-			AND code=#{code}
+		<if test="code != null and code != ''">
+			AND t.code = #{code}
 		</if>
-		<if test="type != null">
-			AND menuType=#{type}
+		<if test="menuType != null">
+			AND t.menuType = #{menuType}
 		</if>
-		<if test="url != null">
-			AND url=#{url, jdbcType=VARCHAR}
-		</if>
-		<if test="parentId > 0">
-			AND parentId=#{parentId, jdbcType=NUMERIC}
+		<if test="parentId != null and parentId != ''">
+			AND t.parentId = #{parentId, jdbcType=VARCHAR}
 		</if>
 		<if test="beginDate != null">
-			AND createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+			AND t.createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
 		</if>
 		<if test="endDate != null">
-			AND createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+			AND t.createTime &lt;= #{endDate, jdbcType=TIMESTAME}
 		</if>
 	</sql>
 
 	<!-- 插入 -->
 	<insert id="insert" parameterType="com.isheng.model.auth.entity.Menu">
-		INSERT INTO menu
-			(<include refid="columnList" />)
-		VALUES
-			(	#{id}, 
-				#{createUser}, 
-				#{createTime}, 
-				#{updateUser}, 
-				#{updateTime}, 
-				#{name},
-				#{code}, 
-				#{url}, 
-				#{type}, 
-				#{parentId}, 
-				#{sort} 
-			)
+		INSERT INTO menu (
+			<include refid="columnList" />
+		) VALUES (	
+			#{id}, 
+			#{createUser}, 
+			#{createTime}, 
+			#{updateUser}, 
+			#{updateTime}, 
+			#{name},
+			#{code}, 
+			#{url}, 
+			#{menuType}, 
+			#{parentId}, 
+			#{sort} 
+		)
 	</insert>
 
 	<!-- 删除-->
 	<delete id="deleteById">
-		DELETE FROM 
-			menu 
-		WHERE 
-			id = #{id}
+		DELETE FROM menu t WHERE t.id=#{id}
 	</delete>
 	
 	<!-- 根据ID查询 -->
 	<select id="selectById" resultType="com.isheng.model.auth.entity.Menu">
-		SELECT
-		<include refid="columnList" />
-		FROM menu
-		<where>
-			id=#{id}
-		</where>
+		SELECT <include refid="columnList" /> FROM menu WHERE id=#{id}
 	</select>
 
 	<!-- 总记录数 -->
-	<select id="selectCount" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
-		SELECT
-			COUNT(id)
-		FROM menu
-		<where>
-			<include refid="queryCondition"/>
-		</where>
+	<select id="selectCount" parameterType="com.isheng.model.auth.request.MenuQuery" resultType="java.lang.Long" timeout="3000">
+		SELECT COUNT(id) FROM menu t WHERE 1=1 <include refid="queryCondition"/>
 	</select>
 	
 	<!-- 条件查询 -->
-	<select id="selectList" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
-		SELECT
-			COUNT(id)
-		FROM menu
-		<where>
-			<include refid="queryCondition"/>
-		</where>
+	<select id="selectList" parameterType="com.isheng.model.auth.request.MenuQuery" resultMap="resultMap" timeout="3000">
+		SELECT <include refid="columnList"/> FROM menu t WHERE 1=1 <include refid="queryCondition"/>
 	</select>
 	
 	<!-- 分页查询 -->
-	<select id="selectLimit" parameterType="com.isheng.model.auth.request.MenuQuery" timeout="3000">
-		SELECT
-			COUNT(id)
-		FROM menu
-		<where>
-			<include refid="queryCondition"/>
-		</where>
-		LIMIT 
-			#{pageNo}, #{pageSize}
+	<select id="selectLimit" parameterType="com.isheng.model.auth.request.MenuQuery" resultMap="resultMap" timeout="3000">
+		SELECT <include refid="columnList"/> FROM menu t WHERE 1=1 <!-- <include refid="queryCondition"/>  -->
+		ORDER BY t.sort ASC 
+		LIMIT #{pageNo}, #{pageSize}
 	</select>
 	
 	<!-- 查询是否重复 -->
-	<select id="isExist" resultType="boolean" timeout="3000">
-		SELECT
-			COUNT(id)
-		FROM menu
-		<where>
-			id=#{id} AND #{column}=#{value}
-		</where>
+	<select id="isExist" resultType="java.lang.Boolean" timeout="3000">
+		SELECT COUNT(id) FROM menu t WHERE t.id = #{id} AND #{column} = #{value}
 	</select>
 
 	<!-- 更新 -->
@@ -145,38 +104,36 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		UPDATE menu
 		<trim prefix="SET" suffixOverrides=",">
 			<if test="createUser != null">
-				createUser=#{createUser},
+				createUser = #{createUser},
 			</if>
 			<if test="createTime != null">
-				createTime=#{createTime},
+				createTime = #{createTime},
 			</if>
 			<if test="updateUser != null">
-				updateUser=#{updateUser},
+				updateUser = #{updateUser},
 			</if>
 			<if test="updateTime != null">
-				updateTime=#{updateTime},
+				updateTime = #{updateTime},
 			</if>
 			<if test="name != null">
-				name=#{name},
+				name = #{name},
 			</if>
 			<if test="code != null">
-				code=#{code},
+				code = #{code},
 			</if>
 			<if test="url != null">
-				url=#{url},
+				url = #{url},
 			</if>
-			<if test="type != null">
-				type=#{type},
+			<if test="menuType != null">
+				menuType = #{menuType},
 			</if>
 			<if test="parentId > 0">
-				parentId=#{parentId},
+				parentId = #{parentId},
 			</if>
 			<if test="sort > 0">
-				sort=#{sort},
+				sort = #{sort},
 			</if>
 		</trim>
-		<where>
-			id=#{id}
-		</where>
+		WHERE id = #{id}
 	</update>
 </mapper>

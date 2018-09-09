@@ -1,7 +1,11 @@
 package com.isheng.model.auth.enums;
 
 public enum MenuType {
-
+	
+	/**
+	 * 最顶层tab
+	 */
+	ROOT("主菜单"),
 	/**
 	 * 菜单
 	 */
