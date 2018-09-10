@@ -18,16 +18,25 @@ public class SysConfig {
 	
 	public static final String CLIENT_WEB = "Web";
 	
-	public static final String CLIENT_ANDORID = "Andorid";
+	public static final String CLIENT_ANDORID = "andorid";
 	
-	public static final String CLIENT_IOS = "Ios";
+	public static final String CLIENT_IOS = "ios";
+	
+	/** 异常处理页面获取状态码key名称 */
+	public static final String EXCEPTION_CODE_KEY = "errCode";
+	
+	/** 异常处理页面获取错误提示信息key名称 */
+	public static final String EXCEPTION_MSG_KEY = "errMsg";
+	
+	/** 错误视图页面， 如： error.html*/
+	public static final String ERR_VIEW = "error";
 	
 	/** 登录用户存储在session中的key */
-	public static final String SESSION_USER_KEY = "SESSION_USER";
+	public static final String SESSION_USER_KEY = "sessionUser";
 	
 	/** header中设置的session状态key */
 	public static final String SESSION_STATUS_KEY = "sessionStatus";
 	
-	public static final String PERMISSIONS = "PERMISSIONS";
+	public static final String PERMISSIONS = "permissions";
 
 }
