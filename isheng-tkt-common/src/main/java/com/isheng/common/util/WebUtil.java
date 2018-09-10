@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -64,6 +65,25 @@ public final class WebUtil {
 			agent = SysConfig.CLIENT_IOS;
 		}
 		return agent;
+	}
+	
+	/**
+	 * 判断是否为json请求
+	 * 
+	 * @return
+	 */
+	public static final boolean isJsonRequest(HttpServletRequest req) {
+		String requestWith = req.getHeader("X-Requested-With");
+		if (StringUtils.equalsIgnoreCase(requestWith, "XMLHttpRequest")) {
+			return true;
+		}
+		
+		String requestUri = req.getRequestURI();
+		if (StringUtils.endsWithIgnoreCase(requestUri, ".json")
+				|| StringUtils.endsWithIgnoreCase(requestUri, ".jsonp")) {
+			return true;
+		}
+		return false;
 	}
 
 	public static Object toResponse(String content) {
