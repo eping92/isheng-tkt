@@ -16,25 +16,6 @@
 	</modules>
 
 	<dependencies>
-		<!-- service依赖的公用模块 -->
-		<dependency>
-			<groupId>com.isheng</groupId>
-			<artifactId>isheng-tkt-common</artifactId>
-			<exclusions>
-				<exclusion>
-		            <groupId>org.mybatis.spring.boot</groupId>
-		            <artifactId>mybatis-spring-boot-starter</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>mysql</groupId>
-					<artifactId>mysql-connector-java</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>com.isheng</groupId>
-			<artifactId>isheng-tkt-model</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>com.isheng</groupId>
 			<artifactId>isheng-tkt-dao</artifactId>
