@@ -88,6 +88,7 @@ public class ResultModel extends LinkedHashMap<String, Object> {
 		return this;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ResultModel setResult(ResultResp resp) {
 		if (null == resp) {
 			put(CODE, ErrMsg.RESP_NULL.getCode());
@@ -99,9 +100,15 @@ public class ResultModel extends LinkedHashMap<String, Object> {
 		return this;
 	}
 	
-	public ResultModel setResult(BizException be) {
-		put(CODE, be.getCode());
-		put(MSG, be.getMessage());
+	public ResultModel setResult(Exception e) {
+		if (e instanceof BizException) {
+			BizException be = (BizException) e;
+			put(CODE, be.getCode());
+			put(MSG, be.getMessage());
+		} else {
+			put(CODE, ErrMsg.EXP_SYS.getCode());
+			put(MSG, e.getMessage());
+		}
 		return this;
 	}
 	

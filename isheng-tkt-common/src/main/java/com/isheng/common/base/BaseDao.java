@@ -49,6 +49,13 @@ public interface BaseDao<T, Q extends BaseQuery> {
 	long countByParam(Q query) throws BizException;
 	
 	/**
+	 * 查询所有
+	 * @return
+	 * @throws BizException
+	 */
+	List<T> listAll() throws BizException;
+	
+	/**
 	 * 获取满足条件所有记录
 	 * @param query
 	 * @return

@@ -22,6 +22,15 @@ public abstract class AbstractBaseService<T, Q extends BaseQuery> implements Bas
 	 * @return
 	 */
 	protected abstract BaseDao<T, Q> getDao();
+	
+	/**
+	 * 数据校验
+	 * @param t
+	 * @throws BizException
+	 */
+	protected void dataValid(T t) throws BizException {
+		return ;
+	}
 
 	@Override
 	public String add(T entity) throws BizException {
@@ -51,6 +60,11 @@ public abstract class AbstractBaseService<T, Q extends BaseQuery> implements Bas
 	@Override
 	public long getCount(Q query) throws BizException {
 		return this.getDao().countByParam(query);
+	}
+	
+	@Override
+	public List<T> getAll() throws BizException {
+		return this.getDao().listAll();
 	}
 
 	@Override

@@ -58,6 +58,13 @@ public interface BaseService <T, Q extends BaseQuery>{
 	long getCount(Q query) throws BizException;
 	
 	/**
+	 * 查询所有
+	 * @return
+	 * @throws BizException
+	 */
+	List<T> getAll() throws BizException;
+	
+	/**
 	 * 根据条件查询
 	 * 
 	 * @param query

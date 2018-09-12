@@ -2,6 +2,8 @@ package com.isheng.common.base;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.isheng.common.exception.BizException;
 
 public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao<T, Q> {
@@ -37,6 +39,11 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 	public long countByParam(Q query) throws BizException {
 		return this.getMapper().selectCount(query);
 	}
+	
+	@Override
+	public List<T> listAll() throws BizException {
+		return this.getMapper().selectAll();
+	}
 
 	@Override
 	public List<T> listByParam(Q query) throws BizException {
@@ -50,7 +57,11 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 
 	@Override
 	public boolean isExist(String id, String column, Object value) throws BizException {
-		return this.getMapper().isExist(id, column, value);
+		if (StringUtils.isEmpty(id)) {
+			id = "";
+		}
+		int totalCount = this.getMapper().isExist(id, column, value);
+		return totalCount > 0;
 	}
 
 }

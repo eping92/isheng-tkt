@@ -11,15 +11,22 @@ import com.isheng.common.enums.ErrMsg;
  * @author Administrator
  * @version $Id: ResultModel.java 2018年8月6日 下午11:10:56 $
  */
-public class ResultResp implements Serializable{
+public class ResultResp<T> implements Serializable{
 
 	private static final long serialVersionUID = -5130128292735384177L;
 	
+	/**
+	 * 响应码
+	 */
 	private int code;
-	
+	/**
+	 * 提示信息
+	 */
 	private String msg;
-	
-	private Object data;
+	/**
+	 * 返回的数据结果
+	 */
+	private T data;
 	
 	public ResultResp() {};
 	
@@ -28,7 +35,7 @@ public class ResultResp implements Serializable{
 		this.msg = errMsg.getText();
 	}
 	
-	public ResultResp(ErrMsg errMsg, Object data) {
+	public ResultResp(ErrMsg errMsg, T data) {
 		this.code = errMsg.getCode();
 		this.msg = errMsg.getText();
 		this.data = data;
@@ -39,38 +46,46 @@ public class ResultResp implements Serializable{
 		this.msg = msg;
 	}
 	
-	public ResultResp(int code, String msg, Object data) {
+	public ResultResp(int code, String msg, T data) {
 		this.code = code;
 		this.msg = msg;
 		this.data = data;
 	}
 	
-	public ResultResp setCode(int code) {
+	public ResultResp<T> setCode(int code) {
 		this.code = code;
 		return this;
 	}
 	
-	public ResultResp setMsg(String msg) {
+	public ResultResp<T> setMsg(String msg) {
 		this.msg = msg;
 		return this;
 	}
 	
-	public ResultResp setData(Object data) {
+	public ResultResp<T> setData(T data) {
 		this.data = data;
 		return this;
 	}
 	
-	public ResultResp setResponse(ErrMsg errMsg) {
+	public ResultResp<T> setResponse(ErrMsg errMsg) {
 		this.code = errMsg.getCode();
 		this.msg = errMsg.getText();
 		return this;
 	}
 	
-	public ResultResp setResponse(ErrMsg errMsg, Object data) {
+	public ResultResp<T> setResponse(ErrMsg errMsg, T data) {
 		this.code = errMsg.getCode();
 		this.msg = errMsg.getText();
 		this.data = data;
 		return this;
+	}
+	
+	public ResultResp<T> parseResult(ResultResp<T> result) {
+		ResultResp<T> resp = new ResultResp<>();
+		resp.setCode(result.getCode());
+		resp.setMsg(result.getMsg());
+		resp.setData(result.getData());
+		return resp;
 	}
 	
 	public int getCode() {
@@ -81,7 +96,7 @@ public class ResultResp implements Serializable{
 		return msg;
 	}
 
-	public Object getData() {
+	public T getData() {
 		return data;
 	}
 

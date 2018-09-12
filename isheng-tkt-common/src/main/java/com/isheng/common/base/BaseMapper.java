@@ -2,6 +2,7 @@ package com.isheng.common.base;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import com.isheng.common.base.BaseQuery;
 
@@ -50,6 +51,12 @@ public interface BaseMapper <T, Q extends BaseQuery>{
 	long selectCount(Q query);
 	
 	/**
+	 * 查询所有
+	 * @return
+	 */
+	List<T> selectAll();
+	
+	/**
 	 * 获取满足条件所有记录
 	 * @param query
 	 * @return
@@ -66,11 +73,11 @@ public interface BaseMapper <T, Q extends BaseQuery>{
 	List<T> selectLimit(Q query, int pageNo, int pageSize);
 	
 	/**
-	 * 查询指定的值是否有相同
+	 * 查询指定的值是否有相同, >0时有重复
 	 * @param value
 	 * @param id
 	 * @return
 	 */
-	boolean isExist(String id, String column, Object value);
+	int isExist(@Param("id")String id, @Param("column")String column, @Param("value")Object value);
 
 }
