@@ -1,4 +1,4 @@
-package com.isheng.security.domain;
+package com.isheng.model.auth.domain;
 
 import java.io.Serializable;
 

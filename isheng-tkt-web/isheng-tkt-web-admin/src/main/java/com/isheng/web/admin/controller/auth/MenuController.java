@@ -1,4 +1,4 @@
-package com.isheng.web.admin.auth;
+package com.isheng.web.admin.controller.auth;
 
 import java.util.concurrent.Callable;
 import org.apache.commons.lang3.StringUtils;

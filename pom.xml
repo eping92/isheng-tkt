@@ -26,8 +26,8 @@
 		<zkClient.version>0.10</zkClient.version>
 		<!-- spring集成mybatis -->
 		<mybatis.spring.version>1.3.2</mybatis.spring.version>
-		<mysql.connector.version>5.1.6</mysql.connector.version>
-		<!-- <mysql.connector.version>8.0.11</mysql.connector.version> -->
+		<!-- <mysql.connector.version>5.1.6</mysql.connector.version> -->
+		<mysql.connector.version>8.0.11</mysql.connector.version>
 		<!-- shiro框架 -->
 		<shiro.version>1.2.4</shiro.version>
 
@@ -42,7 +42,6 @@
 		<module>isheng-tkt-dao</module>
 		<module>isheng-tkt-web</module>
 		<module>isheng-tkt-service</module>
-		<module>isheng-tkt-security</module>
 	</modules>
 
 	<dependencyManagement>

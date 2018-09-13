@@ -1,4 +1,4 @@
-package com.isheng.security;
+package com.isheng.web.admin.filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +19,16 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.constant.SysConfig;
+import com.isheng.model.auth.domain.UserSession;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.entity.User;
-import com.isheng.security.domain.UserSession;
-import com.isheng.security.domain.UserToken;
-import com.isheng.security.session.SessionHandler;
 import com.isheng.service.auth.MenuService;
+import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.common.UserToken;
 
-public class UserRealm extends AuthorizingRealm {
+public class DefaultUserRealm extends AuthorizingRealm {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserRealm.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultUserRealm.class);
 	
 	@Reference
 	private MenuService menuService;

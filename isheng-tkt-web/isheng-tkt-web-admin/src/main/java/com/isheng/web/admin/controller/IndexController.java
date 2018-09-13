@@ -1,4 +1,4 @@
-package com.isheng.web.admin.auth;
+package com.isheng.web.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

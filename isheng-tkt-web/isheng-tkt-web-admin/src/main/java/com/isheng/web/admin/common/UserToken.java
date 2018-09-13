@@ -1,4 +1,4 @@
-package com.isheng.security.domain;
+package com.isheng.web.admin.common;
 
 import org.apache.shiro.authc.AuthenticationToken;
 

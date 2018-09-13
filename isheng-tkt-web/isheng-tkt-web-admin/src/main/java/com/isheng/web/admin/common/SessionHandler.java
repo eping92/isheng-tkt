@@ -1,10 +1,10 @@
-package com.isheng.security.session;
+package com.isheng.web.admin.common;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 import com.isheng.common.constant.SysConfig;
-import com.isheng.security.domain.UserSession;
+import com.isheng.model.auth.domain.UserSession;
 
 
 /**

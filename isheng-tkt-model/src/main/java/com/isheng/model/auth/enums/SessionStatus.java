@@ -1,4 +1,4 @@
-package com.isheng.security.enums;
+package com.isheng.model.auth.enums;
 
 public enum SessionStatus {
 	

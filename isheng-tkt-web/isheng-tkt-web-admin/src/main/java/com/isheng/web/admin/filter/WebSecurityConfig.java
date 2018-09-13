@@ -1,21 +1,16 @@
 /**
  * Copyright (c) 2011-2016 All Rights Reserved.
  */
-package com.isheng.security;
+package com.isheng.web.admin.filter;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import javax.servlet.Filter;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -41,8 +36,8 @@ public class WebSecurityConfig {
 	
 	@Bean(name = "shiroRealm")
 	@DependsOn("lifecycleBeanPostProcessor")
-    public UserRealm shiroRealm() {
-		UserRealm realm = new UserRealm(); 
+    public DefaultUserRealm shiroRealm() {
+		DefaultUserRealm realm = new DefaultUserRealm(); 
         return realm;
     }
 	

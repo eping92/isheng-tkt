@@ -1,4 +1,4 @@
-package com.isheng.security;
+package com.isheng.web.admin.filter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,9 +22,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.isheng.common.constant.SysConfig;
-import com.isheng.security.domain.UserSession;
-import com.isheng.security.enums.SessionStatus;
-import com.isheng.security.session.SessionHandler;
+import com.isheng.model.auth.domain.UserSession;
+import com.isheng.model.auth.enums.SessionStatus;
+import com.isheng.web.admin.common.SessionHandler;
 
 /**
  * 表单请求权限验证拦截器
@@ -49,7 +49,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 			return false;
 		}
 		
-//		SessionUser user = SessionHandler.currentUser();
+		UserSession user = SessionHandler.currentUser();
 		//redis缓存中获取
 //		String loginSession = valueoptService.get(user.getLoginId() + Constants.PRINCIPAL_NAME_ATTRIBUTE_OMSNAME);
 //		if (StringUtils.isEmpty(loginSession)) {
