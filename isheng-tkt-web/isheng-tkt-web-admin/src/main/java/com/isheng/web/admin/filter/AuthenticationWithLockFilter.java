@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.isheng.common.constant.SysConfig;
-import com.isheng.model.auth.domain.UserSession;
+import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.enums.SessionStatus;
 import com.isheng.web.admin.common.SessionHandler;
 
@@ -49,7 +49,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 			return false;
 		}
 		
-		UserSession user = SessionHandler.currentUser();
+//		UserSession user = SessionHandler.currentUser();
 		//redis缓存中获取
 //		String loginSession = valueoptService.get(user.getLoginId() + Constants.PRINCIPAL_NAME_ATTRIBUTE_OMSNAME);
 //		if (StringUtils.isEmpty(loginSession)) {
@@ -84,7 +84,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 			return true;
 		}
 		//用户已经登录了,没有权限访问
-		UserSession user = SessionHandler.currentUser();
+		SessionUser user = SessionHandler.currentUser();
 		if (null != user) {
 			resp.setHeader(SysConfig.SESSION_STATUS_KEY, SessionStatus.noPermis.name());
 			WebUtils.issueRedirect(request, response, getSuccessUrl());

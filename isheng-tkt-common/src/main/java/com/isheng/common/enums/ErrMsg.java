@@ -15,15 +15,21 @@ public enum ErrMsg implements BaseEnum {
 	WEB_404(400, "找不到文件或目录"),
 	WEB_500(500, "服务器内部错误"),
 	
-	EXP_SYS(-1000, "系统异常"),
-	EXP_ADD(-1001, "新增异常"),
-	EXP_DEL(-1002, "删除异常"),
-	EXP_UP(-1003, "更新异常"),
-	EXP_QUERY(-1004, "查询异常"),
+	LOGIN_NULL(-1000, "账号及密码不能为空"),
+	LOGIN_ERR(-1001, "账号或密码错误"),
+	LOGIN_EXP(-1002, "账户状态异常"),
 	
-	PARAM_NULL(-2000, "参数为空"),
-	PARAM_ERR(-2000, "参数错误"),
-	PARAM_MISS(-2000, "参数不全"),
+	EXP_SYS(-2000, "系统异常"),
+	EXP_ADD(-2001, "新增异常"),
+	EXP_DEL(-2002, "删除异常"),
+	EXP_UP(-2003, "更新异常"),
+	EXP_QUERY(-2004, "查询异常"),
+	
+	PARAM_NULL(-3000, "参数为空"),
+	PARAM_ERR(-3001, "参数错误"),
+	PARAM_MISS(-3002, "参数不全"),
+	PARAM_REPET(-3003, "重复添加"),
+	
 	
 	RESP_NULL(-3000, "返回数据为空"),
 	RESP_ERR(-3001, "返回数据错误");

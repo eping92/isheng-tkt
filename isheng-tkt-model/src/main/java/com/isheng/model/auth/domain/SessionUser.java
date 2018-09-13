@@ -2,7 +2,7 @@ package com.isheng.model.auth.domain;
 
 import java.io.Serializable;
 
-public class UserSession implements Serializable {
+public class SessionUser implements Serializable {
 
 	/**  */
 	private static final long serialVersionUID = -8122426840027092561L;

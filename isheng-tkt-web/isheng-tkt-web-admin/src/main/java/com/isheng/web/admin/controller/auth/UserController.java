@@ -10,16 +10,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.isheng.common.base.BaseController;
+import com.isheng.common.codec.Md5Utils;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.entity.User;
+import com.isheng.model.auth.enums.UserStatus;
 import com.isheng.model.auth.request.UserQuery;
 import com.isheng.service.auth.UserService;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController<User>{
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
@@ -45,6 +48,12 @@ public class UserController {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		try {
+			if (ObjUtil.isNotNull(user.getPwd())) {
+				user.setPwd(Md5Utils.md5(user.getPwd()));
+			}
+			if (null == user.getUserStatus()) {
+				user.setUserStatus(UserStatus.INIT);
+			}
 			String id = userService.add(user);
 			if (StringUtils.isBlank(id)) {
 				return result.setResult(ErrMsg.FAILED);
@@ -120,5 +129,7 @@ public class UserController {
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
+	
+	
 
 }

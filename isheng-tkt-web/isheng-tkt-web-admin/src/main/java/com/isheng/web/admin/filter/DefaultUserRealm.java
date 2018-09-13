@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.constant.SysConfig;
-import com.isheng.model.auth.domain.UserSession;
+import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.entity.User;
 import com.isheng.service.auth.MenuService;
@@ -43,7 +43,7 @@ public class DefaultUserRealm extends AuthorizingRealm {
 		User user = userToken.getUser();
 		logger.info("账户登录，账户:{},被踢出", user.getLoginName());
 		//////TODO 从缓存中删除user session
-		UserSession sessionUser = new UserSession();
+		SessionUser sessionUser = new SessionUser();
 		sessionUser.setLoginName(user.getLoginName());
 		sessionUser.setMobile(user.getMobile());
 		sessionUser.setNick(user.getNick());

@@ -2,6 +2,10 @@ package com.isheng.common.base;
 
 import java.util.Date;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.isheng.common.exception.BizException;
 import com.isheng.common.idgen.IdGenerate;
 import com.isheng.common.model.Page;
@@ -15,6 +19,8 @@ import com.isheng.common.util.ReflexUtil;
  * @version $Id: BaseAbstractService.java 2018年9月1日 下午6:38:28 $
  */
 public abstract class AbstractBaseService<T, Q extends BaseQuery> implements BaseService<T, Q> {
+	
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/**
 	 * 获取dao

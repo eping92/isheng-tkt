@@ -89,6 +89,19 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<if test="id != null">
 				and id = #{id}
 			</if>
+			<if test="createUser != null">
+				and createUser like CONCAT('%', #{createUser}, '%')
+			</if>
+			<if test="updateUser != null">
+				and updateUser like CONCAT('%', #{updateUser}, '%')
+			</if>
+			<if test="beginDate != null">
+				and createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+			</if>
+			<if test="endDate != null">
+				and createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+			</if>
+			
 			<if test="name != null">
 				and name like CONCAT('%', #{name}, '%')
 			</if>
@@ -100,12 +113,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="parentId != null">
 				and parentId = #{parentId}
-			</if>
-			<if test="beginDate != null">
-				and createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
-			</if>
-			<if test="endDate != null">
-				and createTime &lt;= #{endDate, jdbcType=TIMESTAME}
 			</if>
 		</where>
 	</sql>

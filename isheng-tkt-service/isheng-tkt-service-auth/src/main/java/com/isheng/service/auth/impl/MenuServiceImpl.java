@@ -35,7 +35,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		//数据验证
 		this.dataValid(menu);
 		
-		String id = "";
+		String id = IdGenerate.nextId();
 		try {
 			if (menu.getSort() <= 0) {
 				menu.setSort(this.getNextSort(menu.getParentId(), menu.getMenuType()));
@@ -45,7 +45,6 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 				menu.setCode(code);
 			}
 			
-			id = IdGenerate.nextId();
 			menu.setId(id);
 			menu.setCreateTime(new Date());
 			int result = menuDao.save(menu);
@@ -53,6 +52,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 				throw new BizException(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
+			logger.error("添加菜单失败,menu={}", menu);
 			throw new BizException(ErrMsg.EXP_ADD, e);
 		}
 		

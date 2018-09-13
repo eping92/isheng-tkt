@@ -14,50 +14,48 @@ import com.isheng.common.base.BaseController;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultModel;
-import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.domain.SessionUser;
-import com.isheng.model.auth.entity.Menu;
-import com.isheng.model.auth.enums.MenuType;
-import com.isheng.model.auth.request.MenuQuery;
-import com.isheng.service.auth.MenuService;
+import com.isheng.model.auth.entity.Role;
+import com.isheng.model.auth.request.RoleQuery;
+import com.isheng.service.auth.RoleService;
 import com.isheng.web.admin.common.SessionHandler;
 
 @Controller
-@RequestMapping("/menu")
-public class MenuController extends BaseController <Menu> {
+@RequestMapping("/role")
+public class RoleController extends BaseController<Role> {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 	
 	@Reference
-	private MenuService menuService;
+	private RoleService roleService;
 	
 	@ResponseBody
 	@RequestMapping("/list")
-	public Callable<Object> list(MenuQuery menuQuery, @RequestParam(defaultValue="1")String pageNo, @RequestParam(defaultValue="10")String pageSize) {
+	public Callable<Object> list(RoleQuery roleQuery, @RequestParam(defaultValue="1")String pageNo, @RequestParam(defaultValue="10")String pageSize) {
 		return new Callable<Object>() {
 			@Override
 			public Object call() throws Exception {
-				return menuService.getPaging(menuQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+				return roleService.getPaging(roleQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
 			}
 		};
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public Object add(Menu menu) {
-		ResultModel result = this.dataValid(menu);
+	public Object add(Role role) {
+		ResultModel result = this.dataValid(role);
 		if (!result.isSuccess()) {
 			return result;
 		}
 		
 		try {
-			String id = menuService.add(menu);
+			String id = roleService.add(role);
 			if (StringUtils.isBlank(id)) {
 				return result.setResult(ErrMsg.FAILED);
 			}
 			return result.addData("id", id);
 		} catch (BizException e) {
-			logger.error("菜单添加异常,menu={},exception={}", menu, e);
+			logger.error("菜单添加异常,role={},exception={}", role, e);
 			return result.setResult(e);
 		}
 	}
@@ -71,17 +69,15 @@ public class MenuController extends BaseController <Menu> {
 		}
 		
 		try {
-			int count = menuService.deleteById(id);
+			int count = roleService.deleteById(id);
 			if (count <= 0) {
 				return result.setResult(ErrMsg.FAILED);
 			}
-			
-			return result.setResult(ErrMsg.SUCCESS);
 		} catch (BizException e) {
 			logger.error("菜单删除失败,id={},exception={}", id, e);
 			return result.setResult(e);
 		} 
-		
+		return result.setResult(ErrMsg.SUCCESS);
 	}
 	
 	@ResponseBody
@@ -89,11 +85,11 @@ public class MenuController extends BaseController <Menu> {
 	public Object detail(String id) {
 		ResultModel result = getModel();
 		try {
-			Menu menu = menuService.getById(id);
-			if (null == menu) {
+			Role role = roleService.getById(id);
+			if (null == role) {
 				return result.setResult(ErrMsg.FAILED);
 			}
-			return result.setResult(ErrMsg.SUCCESS).addData("menu", menu);
+			return result.setResult(ErrMsg.SUCCESS).addData("role", role);
 		}  catch (BizException e) {
 			logger.error("菜单查询失败,id={},exception={}", id, e);
 			return result.setResult(e);
@@ -102,64 +98,44 @@ public class MenuController extends BaseController <Menu> {
 	
 	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public Object update(Menu menu) {
-		ResultModel result = this.dataValid(menu);
+	public Object update(Role role) {
+		ResultModel result = this.dataValid(role);
 		if (!result.isSuccess()) {
 			return result;
 		}
 		
 		SessionUser user = SessionHandler.currentUser();
-		menu.setUpdateUser(user.getUserId());
+		role.setUpdateUser(user.getUserId());
 		
 		try {
-			int count = menuService.update(menu);
+			int count = roleService.update(role);
 			if (count <= 0) {
 				return result.setResult(ErrMsg.FAILED);
 			}
-			return result;
 		} catch (BizException e) {
-			logger.error("菜单更新异常,menu={},exception={}", menu, e);
+			logger.error("菜单更新异常,role={},exception={}", role, e);
 			return result.setResult(e);
 		} 
-	}
-	
-	/**
-	 * 获取下一个ID
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/nextSort")
-	public Object nextSort(final String parentId, final MenuType menuType) {
-		ResultModel result = getModel();
-		if (null == menuType) {
-			return result.setCode(ErrMsg.PARAM_NULL.getCode()).setMsg("菜单类型为空");
-		}
 		
-		try {
-			long sort = menuService.getNextSort(parentId, menuType);
-			if (sort <= 0) {
-				sort = 1;
-			}
-			return result.setResult(ErrMsg.SUCCESS).addData("sort", sort);
-		}  catch (BizException e) {
-			logger.error("菜单排序号获取异常:parentId={}, menuType={}", parentId, menuType);
-			return result.setResult(e);
-		}
-		
+		return result;
 	}
 	
 	@Override
-	protected ResultModel dataValid(Menu t) {
+	protected  ResultModel dataValid(Role t) {
 		ResultModel result = new ResultModel();
 		if (null == t) {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
-		if (null == t.getMenuType()) {
-			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("类型不能为空");
+		if (StringUtils.isEmpty(t.getName())) {
+			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("角色名称不能为空");
 		}
-		if (ObjUtil.isNull(t.getName())) {
-			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("名称不能为空");
+		boolean isExist = roleService.isExist(t.getId(), "name", t.getName());
+		if (isExist) {
+			return result.setResult(ErrMsg.PARAM_REPET);
 		}
+		
 		return result.setResult(ErrMsg.SUCCESS);
 	}
-
+	
+	
 }

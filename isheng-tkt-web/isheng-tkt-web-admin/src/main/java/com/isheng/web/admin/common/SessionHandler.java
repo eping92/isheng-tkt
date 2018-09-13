@@ -4,7 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 import com.isheng.common.constant.SysConfig;
-import com.isheng.model.auth.domain.UserSession;
+import com.isheng.model.auth.domain.SessionUser;
 
 
 /**
@@ -67,8 +67,8 @@ public class SessionHandler {
 	 * 
 	 * @return
 	 */
-	public static UserSession currentUser() {
-		return getSessionAttr(SysConfig.SESSION_USER_KEY, UserSession.class);
+	public static SessionUser currentUser() {
+		return getSessionAttr(SysConfig.SESSION_USER_KEY, SessionUser.class);
 	}
 
 }

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.isheng.dao.mapper.auth.UserMapper">
+	<resultMap id="mapperResultMap" type="com.isheng.model.auth.entity.User">
+		<id 	property="id" 			column="id" 			jdbcType="VARCHAR" />
+		<result property="createUser" 	column="createUser"		jdbcType="VARCHAR" />
+		<result property="createTime" 	column="createTime"		jdbcType="DATE" />
+		<result property="updateUser" 	column="updateUser"		jdbcType="VARCHAR" />
+		<result property="updateTime" 	column="updateTime"		jdbcType="DATE" />
+
+		<result property="loginName" 	column="loginName" 		jdbcType="VARCHAR" />
+		<result property="nick" 		column="nick" 			jdbcType="VARCHAR" />
+		<result property="realName" 	column="realName" 		jdbcType="VARCHAR" />
+		<result property="headPath" 	column="headPath"		jdbcType="VARCHAR" />
+		<result property="pwd" 			column="pwd"			jdbcType="VARCHAR" />
+		<result property="mobile" 		column="mobile" 		jdbcType="VARCHAR" />
+		<result property="gender" 		column="gender" 		typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result property="companyId" 	column="companyId" 		jdbcType="VARCHAR" />
+		<result property="companyName" 	column="companyName" 	jdbcType="VARCHAR" />
+		<result property="deptId" 		column="deptId" 		jdbcType="VARCHAR" />
+		<result property="deptName" 	column="deptName" 		jdbcType="VARCHAR" />
+		<result property="userStatus" 	column="userStatus" 	typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+	</resultMap>
+	
+	<!-- 结果字段 -->
+	<sql id="columnSql">
+		id, 
+		createUser, 
+		createTime, 
+		updateUser, 
+		updateTime, 
+		loginName, 
+		nick, 
+		realName, 
+		headPath, 
+		pwd, 
+		mobile,
+		gender,
+		companyId,
+		companyName,
+		deptId,
+		deptName,
+		userStatus
+	</sql>
+	
+	<sql id="insertSql">
+		#{id}, 
+		#{createUser}, 
+		#{createTime}, 
+		#{updateUser}, 
+		#{updateTime}, 
+		
+		#{loginName},  
+		#{nick},  
+		#{realName},  
+		#{headPath},  
+		#{pwd},  
+		#{mobile}, 
+		#{gender}, 
+		#{companyId}, 
+		#{companyName}, 
+		#{deptId}, 
+		#{deptName}, 
+		#{userStatus}
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="updateSql">
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="createUser != null">
+				createUser = #{createUser},
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime},
+			</if>
+			<if test="updateUser != null">
+				updateUser = #{updateUser},
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime},
+			</if>
+			<if test="loginName != null">
+				loginName = #{loginName},
+			</if>
+			<if test="nick != null">
+				nick = #{nick},
+			</if>
+			<if test="realName != null">
+				realName = #{realName},
+			</if>
+			<if test="headPath != null">
+				headPath = #{headPath},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile},
+			</if>
+			<if test="gender != null">
+				gender = #{gender},
+			</if>
+			<if test="companyId != null">
+				companyId = #{companyId},
+			</if>
+			<if test="companyName != null">
+				companyName = #{companyName},
+			</if>
+			<if test="deptId != null">
+				deptId = #{deptId},
+			</if>
+			<if test="deptName != null">
+				deptName = #{deptName},
+			</if>
+			<if test="userStatus != null">
+				userStatus = #{userStatus},
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 查询语句 -->
+	<sql id="querySql">
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="createUser != null">
+				and createUser like CONCAT('%', #{createUser}, '%')
+			</if>
+			<if test="updateUser != null">
+				and updateUser like CONCAT('%', #{updateUser}, '%')
+			</if>
+			<if test="beginDate != null">
+				and createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+			</if>
+			<if test="endDate != null">
+				and createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+			</if>
+			
+			<if test="loginName != null">
+				and loginName = #{loginName}
+			</if>
+			<if test="nick != null">
+				and nick like CONCAT('%', #{nick}, '%')
+			</if>
+			<if test="realName != null">
+				and realName like CONCAT('%', #{realName}, '%')
+			</if>
+			<if test="mobile != null">
+				and mobile like CONCAT('%', #{mobile}, '%')
+			</if>
+			<if test="gender != null">
+				and gender = #{gender}
+			</if>
+			<if test="companyName != null">
+				and companyName like CONCAT('%', #{companyName}, '%')
+			</if>
+			<if test="deptName != null">
+				and deptName like CONCAT('%', #{deptName}, '%')
+			</if>
+			<if test="userStatus != null">
+				and userStatus = #{userStatus}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.isheng.model.auth.entity.User">
+		insert into user (<include refid="columnSql"/>) values (<include refid="insertSql"/>)
+	</insert>
+
+	<!-- 删除-->
+	<delete id="deleteById" timeout="3000">
+		delete from user where id=#{id}
+	</delete>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.isheng.model.auth.entity.User" timeout="3000">
+		update user <include refid="updateSql"/> where id = #{id}
+	</update>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultType="com.isheng.model.auth.entity.User" timeout="3000">
+		select <include refid="columnSql" /> from user where id=#{id}
+	</select>
+
+	<!-- 总记录数 -->
+	<select id="selectCount" parameterType="com.isheng.model.auth.request.UserQuery" resultType="java.lang.Long" timeout="3000">
+		select count(id) from user <include refid="querySql"/>
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from user;
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="selectList" parameterType="com.isheng.model.auth.request.UserQuery" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from user <include refid="querySql"/>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectLimit" parameterType="com.isheng.model.auth.request.UserQuery" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from user <include refid="querySql"/> order by sort ASC limit #{pageNo}, #{pageSize}
+	</select>
+	
+	<!-- 查询是否重复 -->
+	<select id="isExist" resultType="java.lang.Integer" timeout="3000">
+		select count(id) from user where id != #{id} and ${column} = #{value}
+	</select>
+	
+	<!-- 根据用户登录名查询 -->
+	<select id="selectByLoginName" resultType="com.isheng.model.auth.entity.User" timeout="3000">
+		select <include refid="columnSql"/> from user where loginName = #{loginName}
+	</select>
+	
+	<!-- 根据用户手机号查询 -->
+	<select id="selectByMobile" resultType="com.isheng.model.auth.entity.User" timeout="3000">
+		select <include refid="columnSql"/> from user where mobile = #{mobile}
+	</select>
+
+</mapper>
