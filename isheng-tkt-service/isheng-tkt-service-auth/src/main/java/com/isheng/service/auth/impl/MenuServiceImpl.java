@@ -12,6 +12,7 @@ import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.idgen.IdGenerate;
 import com.isheng.common.util.ObjUtil;
+import com.isheng.common.util.WebUtil;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
@@ -40,11 +41,9 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 			if (menu.getSort() <= 0) {
 				menu.setSort(this.getNextSort(menu.getParentId(), menu.getMenuType()));
 			}
-			if (ObjUtil.isNotNull(menu.getUrl()) && !"#".equals(menu.getUrl())) {
-				String code = menu.getUrl().replaceFirst("/", "").replace("/", ":");//如：/menu/add改成menu:add
-				menu.setCode(code);
-			}
 			
+			String code = WebUtil.parentUri(menu.getUrl());//如：/menu/add改成menu:add
+			menu.setCode(code);
 			menu.setId(id);
 			menu.setCreateTime(new Date());
 			int result = menuDao.save(menu);

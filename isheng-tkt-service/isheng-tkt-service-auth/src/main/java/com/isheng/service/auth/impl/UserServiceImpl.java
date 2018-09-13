@@ -48,7 +48,7 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 			return resp.setResponse(ErrMsg.LOGIN_NULL);
 		}
 		
-		logger.info("用户登录，loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getPwd());
+		logger.info("用户登录，loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 		
 		if ( (StringUtils.isEmpty(userLogin.getLoginName()) && StringUtils.isEmpty(userLogin.getMobile())) || StringUtils.isEmpty(userLogin.getPwd())) {
 			return resp.setResponse(ErrMsg.LOGIN_NULL);
@@ -70,12 +70,12 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 		}
 		
 		String encryptPwd = Md5Utils.md5(userLogin.getPwd());
-		if (!userLogin.getPwd().equals(encryptPwd)) {
+		if (StringUtils.isEmpty(user.getPwd()) || !user.getPwd().equals(encryptPwd)) {
 			logger.info("用户登录，密码错误:loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 			return resp.setResponse(ErrMsg.LOGIN_ERR);
 		}
 		
-		logger.info("用户登录，登录成功：loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getPwd());
+		logger.info("用户登录，登录成功：loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 		return resp.setResponse(ErrMsg.SUCCESS, user);
 	}
 
