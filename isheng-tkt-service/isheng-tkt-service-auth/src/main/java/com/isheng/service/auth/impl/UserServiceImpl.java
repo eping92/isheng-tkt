@@ -1,17 +1,17 @@
 package com.isheng.service.auth.impl;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.isheng.common.base.AbstractBaseService;
 import com.isheng.common.base.BaseDao;
 import com.isheng.common.codec.Md5Utils;
+import com.isheng.common.constant.SysConfig;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultResp;
+import com.isheng.common.util.ObjUtil;
 import com.isheng.dao.service.auth.UserDao;
 import com.isheng.model.auth.domain.UserLogin;
 import com.isheng.model.auth.entity.User;
@@ -32,13 +32,23 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 	}
 	
 	@Override
-	public User getByLoginName(String loginName) throws BizException {
-		return userDao.getByLoginName(loginName);
-	}
-
-	@Override
-	public User getByMobile(String mobile) throws BizException {
-		return userDao.getByMobile(mobile);
+	public String add(User entity) throws BizException {
+		this.dataValid(entity);
+		
+		String pwd = (ObjUtil.isNotNull(entity.getPwd())) ? entity.getPwd() : SysConfig.USER_INIT_PWD;
+		UserStatus userStatus = (null != entity.getUserStatus()) ? entity.getUserStatus() : UserStatus.INIT;
+		
+		entity.setPwd(Md5Utils.md5(pwd));
+		entity.setUserStatus(userStatus);
+		
+		String id = "";
+		try {
+			id = userDao.save(entity);
+		} catch (Exception e) {
+			logger.error("添加用户失败,User={}", entity);
+			throw new BizException(ErrMsg.EXP_ADD, e);
+		}
+		return id;
 	}
 
 	@Override
@@ -48,7 +58,7 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 			return resp.setResponse(ErrMsg.LOGIN_NULL);
 		}
 		
-		logger.info("用户登录，loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getPwd());
+		logger.info("用户登录，loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 		
 		if ( (StringUtils.isEmpty(userLogin.getLoginName()) && StringUtils.isEmpty(userLogin.getMobile())) || StringUtils.isEmpty(userLogin.getPwd())) {
 			return resp.setResponse(ErrMsg.LOGIN_NULL);
@@ -70,16 +80,43 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 		}
 		
 		String encryptPwd = Md5Utils.md5(userLogin.getPwd());
-		if (!userLogin.getPwd().equals(encryptPwd)) {
+		if (StringUtils.isEmpty(user.getPwd()) || !user.getPwd().equals(encryptPwd)) {
 			logger.info("用户登录，密码错误:loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 			return resp.setResponse(ErrMsg.LOGIN_ERR);
 		}
 		
-		logger.info("用户登录，登录成功：loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getPwd());
+		logger.info("用户登录，登录成功：loginName={}, mobile={}", userLogin.getLoginName(), userLogin.getMobile());
 		return resp.setResponse(ErrMsg.SUCCESS, user);
 	}
-
 	
+	@Override
+	public int update(User entity) throws BizException {
+		this.dataValid(entity);
+		if (ObjUtil.isNull(entity.getId())) {
+			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "ID不能为空");
+		}
+		
+		return userDao.update(entity);
+	}
 
+	@Override
+	public User getByLoginName(String loginName) throws BizException {
+		return userDao.getByLoginName(loginName);
+	}
+
+	@Override
+	public User getByMobile(String mobile) throws BizException {
+		return userDao.getByMobile(mobile);
+	}
+
+	@Override
+	protected void dataValid(User t) throws BizException {
+		if (null == t) {
+			throw new BizException(ErrMsg.PARAM_NULL);
+		}
+		if (ObjUtil.isNull(t.getLoginName())) {
+			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "登录名不能为空");
+		}
+	}
 
 }

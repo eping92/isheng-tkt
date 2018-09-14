@@ -36,8 +36,8 @@ public class MenuServiceTest extends BaseTest {
 		entity.setUpdateTime(new Date());
 		entity.setUpdateUser("我自己");
 		entity.setUrl("/menu/add");
-		int result = menuDao.save(entity);
-		System.out.println("保存成功条数 = " + result);
+		String id = menuDao.save(entity);
+		System.out.println("id = " + id);
 	}
 	
 	@Test

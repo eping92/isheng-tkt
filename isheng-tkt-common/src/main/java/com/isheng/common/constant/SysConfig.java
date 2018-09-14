@@ -22,6 +22,9 @@ public class SysConfig {
 	
 	public static final String CLIENT_IOS = "ios";
 	
+	/** 用户初始密码 */
+	public static final String USER_INIT_PWD = "123456";
+	
 	/** 异常处理页面获取状态码key名称 */
 	public static final String EXCEPTION_CODE_KEY = "errCode";
 	

@@ -31,11 +31,7 @@ public class RoleServiceImpl extends AbstractBaseService<Role, RoleQuery> implem
 		this.dataValid(entity);
 		String id = "";
 		try {
-			entity.setId(id);
-			int result = roleDao.save(entity);
-			if (result <= 0) {
-				throw new BizException(ErrMsg.FAILED);
-			}
+			id = roleDao.save(entity);
 		} catch (Exception e) {
 			throw new BizException(ErrMsg.EXP_ADD, e);
 		}

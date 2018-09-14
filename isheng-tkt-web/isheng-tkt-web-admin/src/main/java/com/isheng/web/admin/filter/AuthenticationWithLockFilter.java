@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.isheng.common.constant.SysConfig;
+import com.isheng.common.util.WebUtil;
 import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.enums.SessionStatus;
 import com.isheng.web.admin.common.SessionHandler;
@@ -59,7 +60,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 		String uri = req.getRequestURI();
-		String code = uri.substring(0, uri.indexOf(".")).replaceFirst("/", "").replace("/", ":");
+		String code = WebUtil.parentUri(uri);
 		try {
 			if (StringUtils.isNotEmpty(code) && !":".equals(code) && subject.isPermitted(code)) {
 				logger.debug("-----------当前请求【{}】,没有权限访问----------", code);

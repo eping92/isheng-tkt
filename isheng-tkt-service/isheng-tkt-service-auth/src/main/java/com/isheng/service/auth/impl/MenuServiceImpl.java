@@ -1,7 +1,5 @@
 package com.isheng.service.auth.impl;
 
-import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -10,7 +8,6 @@ import com.isheng.common.base.AbstractBaseService;
 import com.isheng.common.base.BaseDao;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
-import com.isheng.common.idgen.IdGenerate;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
@@ -35,28 +32,28 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		//数据验证
 		this.dataValid(menu);
 		
-		String id = IdGenerate.nextId();
+		String id = "";
 		try {
-			if (menu.getSort() <= 0) {
-				menu.setSort(this.getNextSort(menu.getParentId(), menu.getMenuType()));
-			}
-			if (ObjUtil.isNotNull(menu.getUrl()) && !"#".equals(menu.getUrl())) {
-				String code = menu.getUrl().replaceFirst("/", "").replace("/", ":");//如：/menu/add改成menu:add
-				menu.setCode(code);
-			}
+			long nextSort = (menu.getSort() > 0) ? menu.getSort() : this.getNextSort(menu.getParentId(), menu.getMenuType());
+			String code = this.buildCode(menu.getUrl());//如：/menu/add改成menu:add
 			
-			menu.setId(id);
-			menu.setCreateTime(new Date());
-			int result = menuDao.save(menu);
-			if (result <= 0) {
-				throw new BizException(ErrMsg.FAILED);
-			}
+			menu.setSort(nextSort);
+			menu.setCode(code);
+			id = menuDao.save(menu);
 		} catch (Exception e) {
 			logger.error("添加菜单失败,menu={}", menu);
 			throw new BizException(ErrMsg.EXP_ADD, e);
 		}
 		
 		return id;
+	}
+	
+	private String buildCode(String url) {
+		String code = "";
+		if (ObjUtil.isNotNull(url)) {
+			code = url.replaceFirst("/", "").replace("/", ":");
+		}
+		return code;
 	}
 	
 	@Override
