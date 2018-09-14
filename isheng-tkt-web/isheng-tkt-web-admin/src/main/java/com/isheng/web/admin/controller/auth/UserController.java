@@ -14,9 +14,11 @@ import com.isheng.common.base.BaseController;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
+import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.User;
 import com.isheng.model.auth.request.UserQuery;
 import com.isheng.service.auth.UserService;
+import com.isheng.web.admin.common.SessionHandler;
 
 @Controller
 @RequestMapping("/user")
@@ -46,16 +48,18 @@ public class UserController extends BaseController<User>{
 			return result;
 		}
 		
+		SessionUser sessionUser = SessionHandler.currentUser();
+		user.setCreateUser(sessionUser.getUserId());
 		try {
 			String id = userService.add(user);
 			if (StringUtils.isBlank(id)) {
 				return result.setResult(ErrMsg.FAILED);
 			}
+			return result.addData("id", id);
 		} catch (Exception e) {
 			logger.error("add user exception：", e.getMessage());
 			return result.setResult(ErrMsg.EXP_ADD);
 		}
-		return result.setResult(ErrMsg.SUCCESS);
 	}
 	
 	@ResponseBody
@@ -109,8 +113,8 @@ public class UserController extends BaseController<User>{
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		
-//		user.setUpdateUser(updateUser);
-		
+		SessionUser sessionUser = SessionHandler.currentUser();
+		user.setUpdateUser(sessionUser.getUserId());
 		try {
 			int count = userService.update(user);
 			if (count <= 0) {

@@ -50,6 +50,9 @@ public class MenuController extends BaseController <Menu> {
 			return result;
 		}
 		
+		SessionUser sessionUser = SessionHandler.currentUser();
+		menu.setCreateUser(sessionUser.getUserId());
+		
 		try {
 			String id = menuService.add(menu);
 			if (StringUtils.isBlank(id)) {

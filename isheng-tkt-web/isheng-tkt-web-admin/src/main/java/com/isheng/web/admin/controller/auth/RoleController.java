@@ -48,6 +48,8 @@ public class RoleController extends BaseController<Role> {
 			return result;
 		}
 		
+		SessionUser sessionUser = SessionHandler.currentUser();
+		role.setCreateUser(sessionUser.getUserId());
 		try {
 			String id = roleService.add(role);
 			if (StringUtils.isBlank(id)) {
@@ -106,7 +108,6 @@ public class RoleController extends BaseController<Role> {
 		
 		SessionUser user = SessionHandler.currentUser();
 		role.setUpdateUser(user.getUserId());
-		
 		try {
 			int count = roleService.update(role);
 			if (count <= 0) {
