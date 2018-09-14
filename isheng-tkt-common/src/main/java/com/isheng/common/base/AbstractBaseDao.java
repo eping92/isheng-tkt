@@ -1,10 +1,13 @@
 package com.isheng.common.base;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.isheng.common.exception.BizException;
+import com.isheng.common.idgen.IdGenerate;
+import com.isheng.common.util.ReflexUtil;
 
 public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao<T, Q> {
 	
@@ -16,8 +19,12 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 	protected abstract BaseMapper<T, Q> getMapper();
 
 	@Override
-	public int save(T entity) throws BizException {
-		return this.getMapper().insert(entity);
+	public String save(T entity) throws BizException {
+		String id = IdGenerate.nextId();
+		ReflexUtil.setFieldValue(entity, "id", id);//通过反射设置id
+		ReflexUtil.setFieldValue(entity, "createTime", new Date());//通过反射设置createTime
+		int result = this.getMapper().insert(entity);
+		return (result >= 1) ? id : "";
 	};
 
 	@Override
@@ -27,6 +34,7 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 
 	@Override
 	public int update(T entity) throws BizException {
+		ReflexUtil.setFieldValue(entity, "updateTime", new Date());
 		return this.getMapper().update(entity);
 	}
 
