@@ -63,25 +63,12 @@ public class ObjUtil {
 	}
 
 	public static boolean isNotNull(Object value) {
-
 		return !isNull(value);
 	}
 
 	public static boolean isNotNull(Object value, Object... items) {
-
 		return !isNull(value, items);
 	}
 
-	public static boolean Null(Object value, Object... items) {
-		if (isNull(value) || isNull(items)) {
-			return true;
-		}
-		for (Object item : items) {
-			if (isNull(item)) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 }

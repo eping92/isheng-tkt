@@ -154,5 +154,21 @@ public final class WebUtil {
 		String path = request.getContextPath();
 		return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 	}
+	
+	/**
+	 * 将uri = "/menu/list.json"或"/menu/list"转成：menu:code
+	 * 
+	 * @param uri
+	 * @return
+	 */
+	public static String parentUri(String uri) {
+		if (uri.contains(".")) {
+			uri = uri.substring(0, uri.indexOf("."));
+		}
+		if (uri.startsWith("/")) {
+			uri = uri.replaceFirst("/", "");
+		}
+		return uri.replaceAll("/", ":");
+	}
 
 }

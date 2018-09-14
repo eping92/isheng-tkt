@@ -9,6 +9,7 @@ import com.isheng.common.base.BaseDao;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.util.ObjUtil;
+import com.isheng.common.util.WebUtil;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
@@ -35,8 +36,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		String id = "";
 		try {
 			long nextSort = (menu.getSort() > 0) ? menu.getSort() : this.getNextSort(menu.getParentId(), menu.getMenuType());
-			String code = this.buildCode(menu.getUrl());//如：/menu/add改成menu:add
-			
+			String code = WebUtil.parentUri(menu.getUrl());//如：/menu/add改成menu:add
 			menu.setSort(nextSort);
 			menu.setCode(code);
 			id = menuDao.save(menu);
@@ -46,14 +46,6 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		}
 		
 		return id;
-	}
-	
-	private String buildCode(String url) {
-		String code = "";
-		if (ObjUtil.isNotNull(url)) {
-			code = url.replaceFirst("/", "").replace("/", ":");
-		}
-		return code;
 	}
 	
 	@Override
