@@ -88,10 +88,11 @@ public class IndexController extends BaseController<UserLogin> {
 	 * 
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/logout")
-	public String logout() {
-		//处理逻辑
-		return "login";
+	public Object logout() {
+		ResultModel result = new ResultModel();
+		SecurityUtils.getSubject().logout();
+		return result.setCode(ErrMsg.SUCCESS.getCode()).setMsg("退出成功").addData(SysConfig.GOTO_KEY, "index");
 	}
-
 }

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.isheng.dao.mapper.auth.UserRoleMapper">
+	<resultMap id="mapperResultMap" type="com.isheng.model.auth.entity.UserRole">
+		<id 	property="id" 			column="id" 			jdbcType="VARCHAR" />
+		<result property="createUser" 	column="createUser"		jdbcType="VARCHAR" />
+		<result property="createTime" 	column="createTime"		jdbcType="DATE" />
+		<result property="updateUser" 	column="updateUser"		jdbcType="VARCHAR" />
+		<result property="updateTime" 	column="updateTime"		jdbcType="DATE" />
+
+		<result property="userId" 		column="userId" 		jdbcType="VARCHAR" />
+		<result property="roleId" 		column="roleId" 		jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 结果字段 -->
+	<sql id="columnSql">
+		id, 
+		createUser, 
+		createTime, 
+		updateUser, 
+		updateTime, 
+		userId, 
+		roleId
+	</sql>
+	
+	<sql id="insertSql">
+		#{id}, 
+		#{createUser}, 
+		#{createTime}, 
+		#{updateUser}, 
+		#{updateTime}, 
+		#{userId},
+		#{roleId}
+	</sql>
+	
+	<!-- 更新字段 -->
+	<sql id="updateSql">
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="createUser != null">
+				createUser = #{createUser},
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime},
+			</if>
+			<if test="updateUser != null">
+				updateUser = #{updateUser},
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime},
+			</if>
+			<if test="userId != null">
+				userId = #{userId},
+			</if>
+			<if test="roleId != null">
+				roleId = #{roleId},
+			</if>
+		</trim>
+	</sql>
+	
+	<!-- 查询语句 -->
+	<sql id="querySql">
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="createUser != null">
+				and createUser like CONCAT('%', #{createUser}, '%')
+			</if>
+			<if test="updateUser != null">
+				and updateUser like CONCAT('%', #{updateUser}, '%')
+			</if>
+			<if test="beginDate != null">
+				and createTime &gt;= #{beginDate, jdbcType=TIMESTAME}
+			</if>
+			<if test="endDate != null">
+				and createTime &lt;= #{endDate, jdbcType=TIMESTAME}
+			</if>
+			
+			<if test="userId != null">
+				and userId = #{userId}
+			</if>
+			<if test="roleId != null">
+				and roleId = #{roleId}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.isheng.model.auth.entity.UserRole">
+		insert into userRole (<include refid="columnSql"/>) values (<include refid="insertSql"/>)
+	</insert>
+	
+	<!-- 批量插入 -->
+	<insert id="batchInsert" parameterType="java.util.List">
+		replace into userRole 
+			(<include refid="columnSql"/>) 
+		values 
+			<foreach collection="userRoles" item="ur" separator=",">
+				(<include refid="insertSql"/>)
+			</foreach>
+	</insert>
+
+	<!-- 删除-->
+	<delete id="deleteById" timeout="3000">
+		delete from userRole where id=#{id}
+	</delete>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.isheng.model.auth.entity.UserRole" timeout="3000">
+		update userRole <include refid="updateSql"/> where id = #{id}
+	</update>
+	
+	<!-- 根据ID查询 -->
+	<select id="selectById" resultType="com.isheng.model.auth.entity.UserRole" timeout="3000">
+		select <include refid="columnSql" /> from userRole where id=#{id}
+	</select>
+
+	<!-- 总记录数 -->
+	<select id="selectCount" parameterType="com.isheng.model.auth.request.UserRoleQuery" resultType="java.lang.Long" timeout="3000">
+		select count(id) from userRole <include refid="querySql"/>
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from userRole;
+	</select>
+	
+	<!-- 条件查询 -->
+	<select id="selectList" parameterType="com.isheng.model.auth.request.UserRoleQuery" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from userRole <include refid="querySql"/>
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="selectLimit" parameterType="com.isheng.model.auth.request.UserRoleQuery" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from userRole <include refid="querySql"/> order by sort ASC limit #{pageNo}, #{pageSize}
+	</select>
+	
+	<!-- 查询用户的所有角色对应的关系 -->
+	<select id="selectUserRoles" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from userRole where userId = #{userId}
+	</select>
+	
+	<!-- 查询是否重复 -->
+	<select id="isExist" resultType="java.lang.Integer" timeout="3000">
+		select count(id) from userRole where id != #{id} and ${column} = #{value}
+	</select>
+
+</mapper>

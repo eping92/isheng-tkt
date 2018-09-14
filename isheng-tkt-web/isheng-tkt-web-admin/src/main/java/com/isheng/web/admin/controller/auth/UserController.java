@@ -126,6 +126,23 @@ public class UserController extends BaseController<User>{
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
+	
+	/**
+	 * 分配角色
+	 * @return
+	 */
+	public Object allotRole(String userId, String[] roleIds) {
+		ResultModel result = new ResultModel();
+		if (ObjUtil.isNull(userId)) {
+			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("请选择用户");
+		}
+		if (null == roleIds || roleIds.length <= 0) {
+			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("请至少选择一个角色");
+		}
+		
+		
+		return result.setResult(ErrMsg.SUCCESS);
+	}
 
 	@Override
 	protected ResultModel dataValid(User t) {

@@ -1,5 +1,7 @@
 package com.isheng.service.auth.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -12,6 +14,7 @@ import com.isheng.common.util.ObjUtil;
 import com.isheng.common.util.WebUtil;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
+import com.isheng.model.auth.entity.UserRole;
 import com.isheng.model.auth.enums.MenuType;
 import com.isheng.model.auth.request.MenuQuery;
 import com.isheng.service.auth.MenuService;
@@ -85,5 +88,25 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 			}
 		}
 	}
+
+	@Override
+	public List<Menu> getListByUserId(String userId) throws BizException {
+		List<UserRole> userRoles = null;
+		return null;
+	}
+	
+	@Override
+	public List<Menu> getListByRoleId(String roleId) throws BizException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Menu> getListByUserRoles(List<UserRole> userRoles) throws BizException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

@@ -40,6 +40,10 @@ public class SysConfig {
 	/** header中设置的session状态key */
 	public static final String SESSION_STATUS_KEY = "sessionStatus";
 	
-	public static final String PERMISSIONS = "permissions";
+	public static final String MENU_ROOT_KEY = "rootMenu";
+	
+	public static final String MENU_MENU_KEY = "menuMenu";
+	
+	public static final String MENU_BUTTON_KEY = "buttonMenu";
 
 }

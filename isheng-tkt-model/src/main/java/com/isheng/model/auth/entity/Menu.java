@@ -1,5 +1,7 @@
 package com.isheng.model.auth.entity;
 
+import java.util.List;
+
 import com.isheng.common.base.BaseEntity;
 import com.isheng.model.auth.enums.MenuType;
 
@@ -28,6 +30,9 @@ public class Menu extends BaseEntity {
 	
 	/** 页面是否被选中 */
 	private transient boolean checked;
+	
+	/** 下级菜单 */
+	private transient List<Menu> childList;
 
 	public String getName() {
 		return name;
@@ -83,6 +88,14 @@ public class Menu extends BaseEntity {
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+	
+	public List<Menu> getChildList() {
+		return childList;
+	}
+
+	public void setChildList(List<Menu> childList) {
+		this.childList = childList;
 	}
 
 	/** 
