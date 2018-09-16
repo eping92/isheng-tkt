@@ -1,23 +1,20 @@
 package com.isheng.web.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.isheng.common.base.BaseController;
 import com.isheng.common.constant.SysConfig;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.model.ResultResp;
 import com.isheng.model.auth.domain.UserLogin;
 import com.isheng.model.auth.entity.User;
+import com.isheng.service.auth.MenuService;
 import com.isheng.service.auth.UserService;
-import com.isheng.web.admin.common.SessionHandler;
 import com.isheng.web.admin.common.UserToken;
 
 /**
@@ -29,10 +26,12 @@ import com.isheng.web.admin.common.UserToken;
  */
 @Controller
 @RequestMapping("")
-public class IndexController extends BaseController<UserLogin> {
+public class IndexController extends AbstractBaseController {
 	
 	@Reference
 	private UserService userService;
+	@Reference
+	private MenuService menuService;
 	
 	/**
 	 * 首页
@@ -75,10 +74,13 @@ public class IndexController extends BaseController<UserLogin> {
 		
 		SecurityUtils.getSubject().logout();
 		SecurityUtils.getSubject().login(new UserToken(user, user.getPwd()));
-		String gto = (String) SessionHandler.getSessionAttr(SysConfig.GOTO_KEY);
+		String gto = getSessionAttr(SysConfig.GOTO_KEY, String.class);
 		if (StringUtils.isEmpty(gto) || "null".equalsIgnoreCase(gto)) {
 			gto = "index";
 		}
+		
+		//初始化菜单
+		initMenu();
 		
 		return result.setResult(ErrMsg.SUCCESS).addData(SysConfig.GOTO_KEY, gto);
 	}

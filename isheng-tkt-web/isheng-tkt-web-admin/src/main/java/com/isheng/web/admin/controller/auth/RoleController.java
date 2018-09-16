@@ -1,5 +1,6 @@
 package com.isheng.web.admin.controller.auth;
 
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,24 +11,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.isheng.common.base.BaseController;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultModel;
+import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.Role;
 import com.isheng.model.auth.request.RoleQuery;
+import com.isheng.service.auth.RoleMenuService;
 import com.isheng.service.auth.RoleService;
-import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.controller.AbstractBaseController;
 
 @Controller
 @RequestMapping("/role")
-public class RoleController extends BaseController<Role> {
+public class RoleController extends AbstractBaseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 	
 	@Reference
 	private RoleService roleService;
+	@Reference
+	private RoleMenuService roleMenuService;
 	
 	@ResponseBody
 	@RequestMapping("/list")
@@ -48,7 +52,7 @@ public class RoleController extends BaseController<Role> {
 			return result;
 		}
 		
-		SessionUser sessionUser = SessionHandler.currentUser();
+		SessionUser sessionUser = getCurrentUser();
 		role.setCreateUser(sessionUser.getUserId());
 		try {
 			String id = roleService.add(role);
@@ -106,7 +110,7 @@ public class RoleController extends BaseController<Role> {
 			return result;
 		}
 		
-		SessionUser user = SessionHandler.currentUser();
+		SessionUser user = getCurrentUser();
 		role.setUpdateUser(user.getUserId());
 		try {
 			int count = roleService.update(role);
@@ -121,16 +125,41 @@ public class RoleController extends BaseController<Role> {
 		return result;
 	}
 	
-	@Override
-	protected  ResultModel dataValid(Role t) {
+	/**
+	 * 分配权限
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/allotMenu", method = RequestMethod.POST)
+	public Object allotMenu(String roleId, String[] menuIds) {
 		ResultModel result = new ResultModel();
-		if (null == t) {
+		if (ObjUtil.isNull(roleId)) {
+			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("请选择角色");
+		}
+		if (null == menuIds || menuIds.length <= 0) {
+			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("请至少选择一个权限");
+		}
+		
+		try {
+			roleMenuService.batchAdd(roleId, Arrays.asList(menuIds));
+		} catch (Exception e) {
+			return result.setResult(e);
+		}
+		
+		return result.setResult(ErrMsg.SUCCESS);
+	}
+	
+	@Override
+	protected  ResultModel dataValid(Object object) {
+		ResultModel result = new ResultModel();
+		if (null == object) {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
-		if (StringUtils.isEmpty(t.getName())) {
+		Role data = (Role) object;
+		if (StringUtils.isEmpty(data.getName())) {
 			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("角色名称不能为空");
 		}
-		boolean isExist = roleService.isExist(t.getId(), "name", t.getName());
+		boolean isExist = roleService.isExist(data.getId(), "name", data.getName());
 		if (isExist) {
 			return result.setResult(ErrMsg.PARAM_REPET);
 		}

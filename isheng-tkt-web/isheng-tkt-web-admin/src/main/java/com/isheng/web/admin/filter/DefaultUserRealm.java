@@ -23,7 +23,7 @@ import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.entity.User;
 import com.isheng.service.auth.MenuService;
-import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.common.SessionUtil;
 import com.isheng.web.admin.common.UserToken;
 
 public class DefaultUserRealm extends AuthorizingRealm {
@@ -51,7 +51,7 @@ public class DefaultUserRealm extends AuthorizingRealm {
 		sessionUser.setUserId(user.getId());
 		
 		//重新放入会话中
-		SessionHandler.setSessionAttr(SysConfig.SESSION_USER_KEY, sessionUser);
+		SessionUtil.setSessionAttr(SysConfig.SESSION_USER_KEY, sessionUser);
 		//放入缓存中
 		logger.info("账户登录,账户:{}, sessionId:{}", user.getLoginName(), SecurityUtils.getSubject().getSession().getId());
 		
@@ -69,7 +69,7 @@ public class DefaultUserRealm extends AuthorizingRealm {
 			return null;
 		}
 		
-		SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) SessionHandler.getSessionAttr(SysConfig.PERMISSIONS);
+		SimpleAuthorizationInfo info = (SimpleAuthorizationInfo) SessionUtil.getSessionAttr(SysConfig.PERMISSIONS);
 		if (null != info) {
 			return info;
 		}
@@ -80,7 +80,7 @@ public class DefaultUserRealm extends AuthorizingRealm {
 			for (Menu m : menuList) {
 				info.addStringPermission(m.getCode());
 			}
-			SessionHandler.setSessionAttr(SysConfig.SESSION_USER_KEY, info);
+			SessionUtil.setSessionAttr(SysConfig.SESSION_USER_KEY, info);
 		}
 		
 		return info;

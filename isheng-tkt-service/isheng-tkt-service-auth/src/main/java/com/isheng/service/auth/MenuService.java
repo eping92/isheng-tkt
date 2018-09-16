@@ -5,7 +5,7 @@ import java.util.List;
 import com.isheng.common.base.BaseService;
 import com.isheng.common.exception.BizException;
 import com.isheng.model.auth.entity.Menu;
-import com.isheng.model.auth.entity.UserRole;
+import com.isheng.model.auth.entity.Role;
 import com.isheng.model.auth.enums.MenuType;
 import com.isheng.model.auth.request.MenuQuery;
 
@@ -38,11 +38,12 @@ public interface MenuService extends BaseService<Menu, MenuQuery>{
 	public List<Menu> getListByRoleId(String roleId) throws BizException;
 	
 	/**
-	 * 查询制定的用户角色的权限
-	 * @param userRoles
+	 * 角色的所有权限
+	 * 
+	 * @param roles
 	 * @return
 	 * @throws BizException
 	 */
-	public List<Menu> getListByUserRoles(List<UserRole> userRoles) throws BizException;
-
+	List<Menu> getListByRoles(List<Role> roles) throws BizException;
+	
 }

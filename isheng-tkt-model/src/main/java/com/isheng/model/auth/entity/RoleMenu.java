@@ -23,6 +23,12 @@ public class RoleMenu extends BaseEntity {
 	 * 菜单id
 	 */
 	private String menuId;
+	
+	public RoleMenu(String roleId, String menuId) {
+		super();
+		this.roleId = roleId;
+		this.menuId = menuId;
+	}
 
 	public String getRoleId() {
 		return roleId;

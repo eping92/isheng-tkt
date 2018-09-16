@@ -17,15 +17,7 @@ import com.isheng.model.auth.request.RoleMenuQuery;
  */
 @Mapper
 @Repository
-public interface RoleMenuMapper extends BaseMapper<RoleMenuMapper, RoleMenuQuery> {
-	
-	/**
-	 * 批量插入
-	 * @param roleId
-	 * @param menuIds
-	 * @throws BizException
-	 */
-	void batchInsert(@Param("roleId")String roleId, @Param("menuIds")List<String> menuIds) throws BizException;
+public interface RoleMenuMapper extends BaseMapper<RoleMenu, RoleMenuQuery> {
 	
 	/**
 	 * 根据角色id获取所有角色和权限对应关系
@@ -33,6 +25,16 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenuMapper, RoleMenuQuery
 	 * @return
 	 * @throws BizException
 	 */
-	List<RoleMenu> selectRoleMenus(@Param("roleId")String roleId) throws BizException;
+	List<RoleMenu> selectByRoleId(@Param("roleId")String roleId) throws BizException;
+	
+	/**
+	 * 角色和权限关系是否重复
+	 * 
+	 * @param roleId
+	 * @param menuId
+	 * @return
+	 * @throws BizException
+	 */
+	int isRepet(@Param("roleId")String roleId, @Param("menuId")String menuId) throws BizException;
 
 }

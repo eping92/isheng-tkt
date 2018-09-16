@@ -89,17 +89,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	
 	<!-- 插入 -->
 	<insert id="insert" parameterType="com.isheng.model.auth.entity.RoleMenu">
-		insert into roleMenu (<include refid="columnSql"/>) values (<include refid="insertSql"/>)
-	</insert>
-	
-	<!-- 批量插入 -->
-	<insert id="batchInsert" parameterType="java.util.List">
-		replace into roleMenu 
-			(<include refid="columnSql"/>) 
-		values 
-			<foreach collection="roleMenus" item="ur" separator=",">
-				(<include refid="insertSql"/>)
-			</foreach>
+		replace into roleMenu (<include refid="columnSql"/>) values (<include refid="insertSql"/>)
 	</insert>
 
 	<!-- 删除-->
@@ -138,13 +128,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 根据角色id获取所有角色和权限对应关系 -->
-	<select id="selectRoleMenus" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+	<select id="selectByRoleId" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
 		select <include refid="columnSql"/> from roleMenu where roleId = #{roleId}
 	</select>
 	
 	<!-- 查询是否重复 -->
 	<select id="isExist" resultType="java.lang.Integer" timeout="3000">
 		select count(id) from roleMenu where id != #{id} and ${column} = #{value}
+	</select>
+	
+	<!-- 角色和权限是否重复 -->
+	<select id="isRepet" resultType="java.lang.Integer" timeout="3000">
+		select count(id) from roleMenu where roleId = #{roleId} and menuId = #{menuId}
 	</select>
 
 </mapper>

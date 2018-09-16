@@ -68,8 +68,7 @@ public abstract class AbstractBaseDao<T, Q extends BaseQuery> implements BaseDao
 		if (StringUtils.isEmpty(id)) {
 			id = "";
 		}
-		int totalCount = this.getMapper().isExist(id, column, value);
-		return totalCount > 0;
+		return this.getMapper().isExist(id, column, value) >= 1;
 	}
 
 }

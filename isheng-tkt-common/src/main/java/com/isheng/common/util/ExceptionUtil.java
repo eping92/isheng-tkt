@@ -26,6 +26,7 @@ public class ExceptionUtil {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject(SysConfig.EXCEPTION_CODE_KEY, getErrCode(e));
 		mv.addObject(SysConfig.EXCEPTION_MSG_KEY, getErrMsg(e));
+		mv.setViewName(errView);
 		return mv;
 	}
 	

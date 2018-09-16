@@ -92,10 +92,6 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 	@Override
 	public int update(User entity) throws BizException {
 		this.dataValid(entity);
-		if (ObjUtil.isNull(entity.getId())) {
-			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "ID不能为空");
-		}
-		
 		return userDao.update(entity);
 	}
 
@@ -116,6 +112,14 @@ public class UserServiceImpl extends AbstractBaseService<User, UserQuery> implem
 		}
 		if (ObjUtil.isNull(t.getLoginName())) {
 			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "登录名不能为空");
+		}
+		boolean isRepeatLoginName = this.isExist(t.getId(), "loginName", t.getLoginName());
+		if (isRepeatLoginName) {
+			throw new BizException(ErrMsg.PARAM_ERR.getCode(), "登录名已存在");
+		}
+		boolean isRepeatMobile = this.isExist(t.getId(), "mobile", t.getMobile());
+		if (isRepeatMobile) {
+			throw new BizException(ErrMsg.PARAM_ERR.getCode(), "手机号已存在");
 		}
 	}
 

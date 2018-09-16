@@ -1,6 +1,8 @@
 package com.isheng.dao.service.auth;
 
+import java.util.List;
 import com.isheng.common.base.BaseDao;
+import com.isheng.common.exception.BizException;
 import com.isheng.model.auth.entity.Role;
 import com.isheng.model.auth.request.RoleQuery;
 
@@ -13,5 +15,13 @@ import com.isheng.model.auth.request.RoleQuery;
  */
 public interface RoleDao  extends BaseDao<Role, RoleQuery> {
 	
+	/**
+	 * 得到用户的所有角色信息
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws BizException
+	 */
+	List<Role> listByUserId(String userId) throws BizException;
 
 }

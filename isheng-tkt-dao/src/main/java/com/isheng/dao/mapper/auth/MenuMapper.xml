@@ -161,5 +161,30 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="isExist" resultType="java.lang.Integer" timeout="3000">
 		select count(id) from menu where id != #{id} and ${column} = #{value}
 	</select>
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="selectByUserId" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from menu where id in 
+		( select menuId from roleMenu where roleId in 
+			( select roleId from userRole where userId = #{userId} )
+		)
+	</select>
+	
+	<!-- 查询角色的所有权限 -->
+	<select id="selectByRoleId" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from menu where id in (select menuId from roleMenu where roleId = #{roleId})
+	</select>
+	
+	<!-- 查询多个角色的多个权限 -->
+	<select id="selectByRoles" parameterType="list" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from menu where id in 
+		(select menuId from roleMenu where roleId in 
+			(
+				<foreach collection="roles" item="role" separator=",">
+					#{role.id}
+			 	</foreach>
+			 )
+		)
+	</select>
 
 </mapper>

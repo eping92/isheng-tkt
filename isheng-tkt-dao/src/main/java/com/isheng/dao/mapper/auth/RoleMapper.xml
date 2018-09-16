@@ -11,7 +11,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<result property="updateTime"	column="updateTime"		jdbcType="DATE"/>
 		
 		<result property="name"			column="name"			jdbcType="VARCHAR"/>
-		<result property="desc"			column="desc"			jdbcType="VARCHAR"/>
+		<result property="remark"			column="remark"			jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<sql id="columnSql">
@@ -21,7 +21,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		updateUser, 
 		updateTime, 
 		name, 
-		desc
+		remark
 	</sql>
 	
 	<sql id="insertSql">
@@ -31,7 +31,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		#{updateUser}, 
 		#{updateTime}, 
 		#{name}, 
-		#{desc}
+		#{remark}
 	</sql>
 	
 	<!-- 更新字段 -->
@@ -52,8 +52,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<if test="name != null">
 				name = #{name},
 			</if>
-			<if test="desc != null">
-				desc = #{desc},
+			<if test="remark != null">
+				remark = #{remark},
 			</if>
 		</trim>
 	</sql>
@@ -121,6 +121,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 分页查询 -->
 	<select id="selectLimit" parameterType="com.isheng.model.auth.request.RoleQuery" resultMap="mapperResultMap" timeout="3000">
 		select <include refid="columnSql"/> from role <include refid="querySql"/> order by sort ASC limit #{pageNo}, #{pageSize}
+	</select>
+	
+	<!-- 查询用户的所有角色信息 -->
+	<select id="selectByUserId" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+		select <include refid="columnSql"/> from role where id in (select roleId from userRole where userId = #{userId})
 	</select>
 	
 	<!-- 查询是否重复 -->

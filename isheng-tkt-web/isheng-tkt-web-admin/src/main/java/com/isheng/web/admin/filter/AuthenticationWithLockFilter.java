@@ -25,7 +25,7 @@ import com.isheng.common.constant.SysConfig;
 import com.isheng.common.util.WebUtil;
 import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.enums.SessionStatus;
-import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.common.SessionUtil;
 
 /**
  * 表单请求权限验证拦截器
@@ -50,7 +50,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 			return false;
 		}
 		
-//		UserSession user = SessionHandler.currentUser();
+//		UserSession user = SessionUtil.currentUser();
 		//redis缓存中获取
 //		String loginSession = valueoptService.get(user.getLoginId() + Constants.PRINCIPAL_NAME_ATTRIBUTE_OMSNAME);
 //		if (StringUtils.isEmpty(loginSession)) {
@@ -85,7 +85,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 			return true;
 		}
 		//用户已经登录了,没有权限访问
-		SessionUser user = SessionHandler.currentUser();
+		SessionUser user = SessionUtil.getCurrentUser();
 		if (null != user) {
 			resp.setHeader(SysConfig.SESSION_STATUS_KEY, SessionStatus.noPermis.name());
 			WebUtils.issueRedirect(request, response, getSuccessUrl());
@@ -114,7 +114,7 @@ public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String uri = req.getServletPath() + sb.toString();
 		String loginUrl = getLoginUrl() + "?" + SysConfig.GOTO_KEY + "=" + uri;
-		SessionHandler.setSessionAttr(SysConfig.GOTO_KEY, uri);
+		SessionUtil.setSessionAttr(SysConfig.GOTO_KEY, uri);
 		WebUtils.issueRedirect(request, response, loginUrl);
 	}
 	

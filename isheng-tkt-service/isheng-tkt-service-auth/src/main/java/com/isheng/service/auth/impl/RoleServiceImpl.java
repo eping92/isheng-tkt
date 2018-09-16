@@ -1,14 +1,16 @@
 package com.isheng.service.auth.impl;
 
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.isheng.common.base.AbstractBaseService;
 import com.isheng.common.base.BaseDao;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
+import com.isheng.common.util.ObjUtil;
 import com.isheng.dao.service.auth.RoleDao;
 import com.isheng.model.auth.entity.Role;
 import com.isheng.model.auth.request.RoleQuery;
@@ -46,6 +48,15 @@ public class RoleServiceImpl extends AbstractBaseService<Role, RoleQuery> implem
 		}
 		return roleDao.update(entity);
 	}
+	
+	@Override
+	public List<Role> getListByUserId(String userId) throws BizException  {
+		List<Role> list = null;
+		if (ObjUtil.isNotNull(userId)) {
+			list = roleDao.listByUserId(userId);
+		}
+		return list;
+	}
 
 	@Override
 	protected void dataValid(Role entity) throws BizException {
@@ -60,9 +71,5 @@ public class RoleServiceImpl extends AbstractBaseService<Role, RoleQuery> implem
 			throw new BizException(ErrMsg.PARAM_ERR.getCode(), "角色名称已存在");
 		}
 	}
-	
-	
-
-	
 
 }

@@ -45,5 +45,9 @@ public class SysConfig {
 	public static final String MENU_MENU_KEY = "menuMenu";
 	
 	public static final String MENU_BUTTON_KEY = "buttonMenu";
+	
+	public static final String MENU_USER_KEY = "userMenu";
+	
+	public static final String PERMISSIONS = "permissions";
 
 }

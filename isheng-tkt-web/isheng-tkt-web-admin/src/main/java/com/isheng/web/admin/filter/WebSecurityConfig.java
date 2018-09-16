@@ -86,9 +86,6 @@ public class WebSecurityConfig {
 		filterChainDefinitionManager.put("/login", "anon");
 		filterChainDefinitionManager.put("/logout", "anon");
 		
-		
-		filterChainDefinitionManager.put("/user/*", "anon");
-		
 		filterChainDefinitionManager.put("/**", "authc");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
 		

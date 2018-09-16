@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.isheng.common.base.BaseController;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultModel;
@@ -20,11 +19,11 @@ import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
 import com.isheng.model.auth.request.MenuQuery;
 import com.isheng.service.auth.MenuService;
-import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.controller.AbstractBaseController;
 
 @Controller
 @RequestMapping("/menu")
-public class MenuController extends BaseController <Menu> {
+public class MenuController extends AbstractBaseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	
@@ -50,7 +49,7 @@ public class MenuController extends BaseController <Menu> {
 			return result;
 		}
 		
-		SessionUser sessionUser = SessionHandler.currentUser();
+		SessionUser sessionUser = getCurrentUser();
 		menu.setCreateUser(sessionUser.getUserId());
 		
 		try {
@@ -111,7 +110,7 @@ public class MenuController extends BaseController <Menu> {
 			return result;
 		}
 		
-		SessionUser user = SessionHandler.currentUser();
+		SessionUser user = getCurrentUser();
 		menu.setUpdateUser(user.getUserId());
 		
 		try {
@@ -149,17 +148,18 @@ public class MenuController extends BaseController <Menu> {
 		}
 		
 	}
-	
+
 	@Override
-	protected ResultModel dataValid(Menu t) {
+	protected  ResultModel dataValid(Object object) {
 		ResultModel result = new ResultModel();
-		if (null == t) {
+		if (null == object) {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
-		if (null == t.getMenuType()) {
+		Menu data = (Menu)object;
+		if (null == data.getMenuType()) {
 			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("类型不能为空");
 		}
-		if (ObjUtil.isNull(t.getName())) {
+		if (ObjUtil.isNull(data.getName())) {
 			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("名称不能为空");
 		}
 		return result.setResult(ErrMsg.SUCCESS);

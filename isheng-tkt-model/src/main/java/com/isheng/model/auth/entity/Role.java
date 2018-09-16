@@ -8,7 +8,7 @@ public class Role extends BaseEntity {
 
 	private String name;
 
-	private String desc;
+	private String remark;
 
 	public String getName() {
 		return name;
@@ -18,20 +18,17 @@ public class Role extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getRemark() {
+		return remark;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
-
-	/** 
-	 * @see java.lang.Object#toString()
-	 */
+	
 	@Override
 	public String toString() {
-		return "Role [name=" + name + ", desc=" + desc + "]";
+		return "Role [name=" + name + ", desc=" + remark + "]";
 	}
 	
 	

@@ -14,7 +14,7 @@ import com.isheng.common.util.ObjUtil;
 import com.isheng.common.util.WebUtil;
 import com.isheng.dao.service.auth.MenuDao;
 import com.isheng.model.auth.entity.Menu;
-import com.isheng.model.auth.entity.UserRole;
+import com.isheng.model.auth.entity.Role;
 import com.isheng.model.auth.enums.MenuType;
 import com.isheng.model.auth.request.MenuQuery;
 import com.isheng.service.auth.MenuService;
@@ -54,11 +54,6 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 	@Override
 	public int update(Menu menu) throws BizException {
 		this.dataValid(menu);
-		
-		if (StringUtils.isEmpty(menu.getId())) {
-			throw new BizException(ErrMsg.PARAM_MISS.getCode(), "ID不能为空");
-		}
-		
 		return menuDao.update(menu);
 	}
 
@@ -70,6 +65,33 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		return menuDao.countByParam(query) + 1;
 	}
 
+	@Override
+	public List<Menu> getListByUserId(String userId) throws BizException {
+		List<Menu> list = null;
+		if (ObjUtil.isNotNull(userId)) {
+			list = menuDao.listByUserId(userId);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Menu> getListByRoleId(String roleId) throws BizException {
+		List<Menu> list = null;
+		if (ObjUtil.isNotNull(roleId)) {
+			list = menuDao.listByRoleId(roleId);
+		}
+		return list;
+	}
+	
+	@Override
+	public List<Menu> getListByRoles(List<Role> roles)  throws BizException {
+		List<Menu> list = null;
+		if (null != roles && roles.isEmpty()) {
+			list = menuDao.listByRoles(roles);
+		}
+		return list;
+	}
+	
 	@Override
 	protected void dataValid(Menu menu) throws BizException {
 		if (null == menu) {
@@ -88,25 +110,5 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 			}
 		}
 	}
-
-	@Override
-	public List<Menu> getListByUserId(String userId) throws BizException {
-		List<UserRole> userRoles = null;
-		return null;
-	}
-	
-	@Override
-	public List<Menu> getListByRoleId(String roleId) throws BizException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Menu> getListByUserRoles(List<UserRole> userRoles) throws BizException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 
 }

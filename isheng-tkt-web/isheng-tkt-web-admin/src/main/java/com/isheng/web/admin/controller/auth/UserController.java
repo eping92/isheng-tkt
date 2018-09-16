@@ -1,5 +1,6 @@
 package com.isheng.web.admin.controller.auth;
 
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,24 +11,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.isheng.common.base.BaseController;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.User;
 import com.isheng.model.auth.request.UserQuery;
+import com.isheng.service.auth.UserRoleService;
 import com.isheng.service.auth.UserService;
-import com.isheng.web.admin.common.SessionHandler;
+import com.isheng.web.admin.controller.AbstractBaseController;
 
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController<User>{
+public class UserController extends AbstractBaseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Reference
 	private UserService userService;
+	@Reference
+	private UserRoleService userRoleService;
 	
 	@ResponseBody
 	@RequestMapping("/list")
@@ -48,7 +51,7 @@ public class UserController extends BaseController<User>{
 			return result;
 		}
 		
-		SessionUser sessionUser = SessionHandler.currentUser();
+		SessionUser sessionUser = getCurrentUser();
 		user.setCreateUser(sessionUser.getUserId());
 		try {
 			String id = userService.add(user);
@@ -56,9 +59,9 @@ public class UserController extends BaseController<User>{
 				return result.setResult(ErrMsg.FAILED);
 			}
 			return result.addData("id", id);
-		} catch (Exception e) {
-			logger.error("add user exception：", e.getMessage());
-			return result.setResult(ErrMsg.EXP_ADD);
+		}  catch (Exception e) {
+			logger.error("用户添加异常：", e);
+			return result.setResult(e);
 		}
 	}
 	
@@ -76,8 +79,8 @@ public class UserController extends BaseController<User>{
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			logger.error("delete user by ids exception:id={}, msg={}", id, e.getMessage());
-			return result.setResult(ErrMsg.EXP_DEL);
+			logger.error("用户删除异常", e);
+			return result.setResult(e);
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
@@ -98,8 +101,8 @@ public class UserController extends BaseController<User>{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("query user by id exception:id={}, msg={}", id, e.getMessage());
-			return result.setResult(ErrMsg.EXP_QUERY);
+			logger.error("用户详情查询异常", e);
+			return result.setResult(e);
 		} 
 		
 		return result.setResult(ErrMsg.SUCCESS).addData("user", user);
@@ -109,11 +112,11 @@ public class UserController extends BaseController<User>{
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public Object update(User user) {
 		ResultModel result = new ResultModel();
-		if (ObjUtil.isNotNull(user)) {
+		if (ObjUtil.isNull(user)) {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
 		
-		SessionUser sessionUser = SessionHandler.currentUser();
+		SessionUser sessionUser = getCurrentUser();
 		user.setUpdateUser(sessionUser.getUserId());
 		try {
 			int count = userService.update(user);
@@ -121,8 +124,8 @@ public class UserController extends BaseController<User>{
 				return result.setResult(ErrMsg.FAILED);
 			}
 		} catch (Exception e) {
-			logger.error("update user exception:id={}, msg={}", user.getId(), e.getMessage());
-			return result.setResult(ErrMsg.EXP_UP);
+			logger.error("用户更新异常", e);
+			return result.setResult(e);
 		} 
 		return result.setResult(ErrMsg.SUCCESS);
 	}
@@ -131,6 +134,8 @@ public class UserController extends BaseController<User>{
 	 * 分配角色
 	 * @return
 	 */
+	@ResponseBody
+	@RequestMapping(value = "/allotRole", method = RequestMethod.POST)
 	public Object allotRole(String userId, String[] roleIds) {
 		ResultModel result = new ResultModel();
 		if (ObjUtil.isNull(userId)) {
@@ -140,17 +145,23 @@ public class UserController extends BaseController<User>{
 			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("请至少选择一个角色");
 		}
 		
+		try {
+			userRoleService.batchAdd(userId, Arrays.asList(roleIds));
+		} catch (Exception e) {
+			return result.setResult(e);
+		}
 		
 		return result.setResult(ErrMsg.SUCCESS);
 	}
 
 	@Override
-	protected ResultModel dataValid(User t) {
+	protected ResultModel dataValid(Object object) {
 		ResultModel result = new ResultModel();
-		if (null == t) {
+		if (null == object) {
 			return result.setResult(ErrMsg.PARAM_NULL);
 		}
-		if (ObjUtil.isNull(t.getLoginName())) {
+		User data = (User) object;
+		if (ObjUtil.isNull(data.getLoginName())) {
 			return result.setCode(ErrMsg.PARAM_MISS.getCode()).setMsg("登录名不能为空");
 		}
 		return result.setResult(ErrMsg.SUCCESS);

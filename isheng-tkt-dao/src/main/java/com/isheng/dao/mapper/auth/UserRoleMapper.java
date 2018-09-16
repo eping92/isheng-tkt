@@ -21,17 +21,20 @@ import com.isheng.model.auth.request.UserRoleQuery;
 public interface UserRoleMapper extends BaseMapper<UserRole, UserRoleQuery> {
 	
 	/**
-	 * 批量添加
-	 * @param userId
-	 * @param roleIds
-	 */
-	void batchInsert(@Param("userId")String userId, @Param("roleIds")List<String> roleIds) throws BizException;
-	
-	/**
 	 * 根据用户ID查询
 	 * @param userId
 	 * @return
 	 */
-	List<UserRole> selectUserRoles(@Param("userId")String userId) throws BizException;
+	List<UserRole> selectByUserId(@Param("userId")String userId) throws BizException;
+	
+	/**
+	 * 是否重复添加用户和角色关系
+	 * 
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 * @throws BizException
+	 */
+	int isRepet(@Param("userId")String userId, @Param("roleId")String roleId) throws BizException;
 
 }

@@ -92,16 +92,6 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		insert into userRole (<include refid="columnSql"/>) values (<include refid="insertSql"/>)
 	</insert>
 	
-	<!-- 批量插入 -->
-	<insert id="batchInsert" parameterType="java.util.List">
-		replace into userRole 
-			(<include refid="columnSql"/>) 
-		values 
-			<foreach collection="userRoles" item="ur" separator=",">
-				(<include refid="insertSql"/>)
-			</foreach>
-	</insert>
-
 	<!-- 删除-->
 	<delete id="deleteById" timeout="3000">
 		delete from userRole where id=#{id}
@@ -138,13 +128,18 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 查询用户的所有角色对应的关系 -->
-	<select id="selectUserRoles" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
+	<select id="selectByUserId" parameterType="java.lang.String" resultMap="mapperResultMap" timeout="3000">
 		select <include refid="columnSql"/> from userRole where userId = #{userId}
 	</select>
 	
 	<!-- 查询是否重复 -->
 	<select id="isExist" resultType="java.lang.Integer" timeout="3000">
 		select count(id) from userRole where id != #{id} and ${column} = #{value}
+	</select>
+	
+	<!-- 查询是否重复 -->
+	<select id="isRepet" resultType="java.lang.Integer" timeout="3000">
+		select count(id) from userRole where userId = #{userId} and roleId = #{roleId}
 	</select>
 
 </mapper>
