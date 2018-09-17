@@ -17,11 +17,9 @@ import com.isheng.common.exception.BizException;
  */
 public class BaseController {
 	
-	protected ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-	
 	protected HttpServletRequest getRequest() throws BizException {
 		try {
-			return servletRequestAttributes.getRequest();
+			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		} catch (Exception e) {
 			throw new BizException(e);
 		}
@@ -29,7 +27,7 @@ public class BaseController {
 	
 	protected HttpServletResponse getResponse() throws BizException {
 		try {
-			return servletRequestAttributes.getResponse();
+			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 		} catch (Exception e) {
 			throw new BizException(e);
 		}
@@ -37,7 +35,7 @@ public class BaseController {
 	
 	protected HttpSession getSession() throws BizException {
 		try {
-			return getRequest().getSession();
+			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
 		} catch (Exception e) {
 			throw new BizException(e);
 		}

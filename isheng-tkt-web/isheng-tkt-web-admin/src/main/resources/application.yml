@@ -20,6 +20,9 @@ spring:
     favicon:
       enabled: false
       
+  resources: 
+    static-locations: classpath:/
+      
           
   
       

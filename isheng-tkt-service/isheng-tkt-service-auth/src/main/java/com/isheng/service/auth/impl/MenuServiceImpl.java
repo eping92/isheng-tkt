@@ -1,5 +1,6 @@
 package com.isheng.service.auth.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -71,7 +72,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		if (ObjUtil.isNotNull(userId)) {
 			list = menuDao.listByUserId(userId);
 		}
-		return list;
+		return null != list ? list : new ArrayList<Menu>(0);
 	}
 	
 	@Override

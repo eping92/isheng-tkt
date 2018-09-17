@@ -30,9 +30,8 @@
 					</dl></li>
 			</ul>
 			<ul class="layui-nav layui-layout-right">
-				<li class="layui-nav-item"><a href="javascript:;"><img
-						src="http://t.cn/RCzsdCq" class="layui-nav-img">
-						{{realName}} </a>
+				<li class="layui-nav-item">
+					<a @click="login" href="javascript:void(0);"><img src="http://t.cn/RCzsdCq" class="layui-nav-img">{{loginName}}</a>
 					<dl class="layui-nav-child">
 						<dd>
 							<a href="">基本资料</a>
@@ -41,7 +40,7 @@
 							<a href="">安全设置</a>
 						</dd>
 					</dl></li>
-				<li class="layui-nav-item"><a v-on:click="login" href="javascript:void(0);">退了</a></li>
+				<li class="layui-nav-item"><a @click="logout" href="javascript:void(0);">退了</a></li>
 			</ul>
 		</div>
 
@@ -96,6 +95,8 @@
 
 	<script src="/static/js/layui/layui.js"></script>
 	<script src="/static/js/vue.js"></script>
+	<script src="/static/js/vue-resources.js"></script>
+	<script src="/static/dist/common.js"></script>
 	<script src="/static/dist/index.js"></script>
 </body>
 </html>

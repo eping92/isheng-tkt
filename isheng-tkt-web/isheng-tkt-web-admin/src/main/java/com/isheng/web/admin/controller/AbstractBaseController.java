@@ -7,13 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
-
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.base.BaseController;
 import com.isheng.common.constant.SysConfig;
 import com.isheng.common.exception.BizException;
 import com.isheng.common.model.ResultModel;
-import com.isheng.common.util.WebUtil;
 import com.isheng.model.auth.domain.SessionUser;
 import com.isheng.model.auth.entity.Menu;
 import com.isheng.model.auth.enums.MenuType;
@@ -21,9 +18,6 @@ import com.isheng.service.auth.MenuService;
 
 @Controller
 public abstract class AbstractBaseController extends BaseController {
-	
-	@Reference
-	private MenuService menuService;
 	
 	/**
 	 * 返回对象
@@ -58,8 +52,8 @@ public abstract class AbstractBaseController extends BaseController {
 	 */
 	@SuppressWarnings("unchecked")
 	@Async
-	protected void initMenu() {
-		HttpSession session = WebUtil.getSession();
+	protected void initMenu(MenuService menuService) {
+		HttpSession session = getSession();
 		if (null == session) {
 			return;
 		}
@@ -107,5 +101,4 @@ public abstract class AbstractBaseController extends BaseController {
 			setSessionAttr(SysConfig.MENU_USER_KEY, userMenus);
 		}
 	}
-
 }

@@ -79,10 +79,9 @@ public class IndexController extends AbstractBaseController {
 			gto = "index";
 		}
 		
-		//初始化菜单
-		initMenu();
+		initMenu(menuService);
 		
-		return result.setResult(ErrMsg.SUCCESS).addData(SysConfig.GOTO_KEY, gto);
+		return result.setCode(ErrMsg.SUCCESS.getCode()).setMsg("登陆成功").addData(SysConfig.GOTO_KEY, gto);
 	}
 	
 	/**
@@ -97,4 +96,5 @@ public class IndexController extends AbstractBaseController {
 		SecurityUtils.getSubject().logout();
 		return result.setCode(ErrMsg.SUCCESS.getCode()).setMsg("退出成功").addData(SysConfig.GOTO_KEY, "index");
 	}
+	
 }

@@ -8,6 +8,8 @@ server:
 mybatis: 
   type-aliases-package: com.isheng.model
   mapper-locations: classpath*:com/isheng/dao/mapper/**/*Mapper.xml
+  configuration:
+    call-setters-on-nulls: true
     
 # spring配置
 spring: 
