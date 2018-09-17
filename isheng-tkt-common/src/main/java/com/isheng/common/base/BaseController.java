@@ -35,7 +35,7 @@ public class BaseController {
 	
 	protected HttpSession getSession() throws BizException {
 		try {
-			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+			return getRequest().getSession();
 		} catch (Exception e) {
 			throw new BizException(e);
 		}
