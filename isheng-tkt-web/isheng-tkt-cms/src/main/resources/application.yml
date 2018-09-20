@@ -1,0 +1,33 @@
+##服务端口和项目名称
+server:
+  port: 8881
+  servlet:
+    context-path: /
+    
+## spring配置
+spring: 
+  application:
+    name: isheng-tkt-web-cms
+  profiles:
+    active: dev
+
+  # thymeleaf模版    
+  thymeleaf:
+    cache: false
+    enabled: true
+    mode: HTML5
+    encoding: UTF-8
+    prefix: classpath:/static/page/
+    suffix: .html
+    servlet:
+      content-type: text/html; charset=utf-8
+  resources: 
+    static-locations: classpath:/  
+  
+      
+      
+   
+    
+    
+  
+  

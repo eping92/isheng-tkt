@@ -32,7 +32,7 @@ public class SysConfig {
 	public static final String EXCEPTION_MSG_KEY = "errMsg";
 	
 	/** 错误视图页面， 如： error.html*/
-	public static final String ERR_VIEW = "error";
+	public static final String ERR_VIEW = "err";
 	
 	/** 登录用户存储在session中的key */
 	public static final String SESSION_USER_KEY = "sessionUser";
