@@ -11,7 +11,7 @@
 	<name>isheng-tkt-web</name>
 	<description>web模块</description>
 	<modules>
-		<module>isheng-tkt-web-ticket</module>
     	<module>isheng-tkt-web-cms</module>
+		<module>isheng-tkt-web-ticket</module>
   </modules>
 </project>

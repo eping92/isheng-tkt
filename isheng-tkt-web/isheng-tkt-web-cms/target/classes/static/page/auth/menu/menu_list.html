@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>后台管理系统</title>
+<script src="/static/js/baseCss.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="table-responsive">
+		<table class="table table-bordered table-hover table-striped">
+			<caption>菜单列表</caption>
+			<thead>
+				<tr>
+					<th><input type="checkbox"></th>
+					<th v-for='title in titleList'>{{title}}</th>
+					<!-- <th>名称</th>
+					<th>类型</th>
+					<th>权限码</th>
+					<th>地址</th>
+					<th>创建人</th>
+					<th>创建时间</th>
+					<th>更新人</th>
+					<th>更新时间</th>
+					<th>描述</th> -->
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr v-for="menu in menuList">
+					<td><input type="checkbox"></td>
+					<td>{{menu.name}}</td>
+					<td>{{menu.menuTypeText}}</td>
+					<td>{{menu.code}}</td>
+					<td>{{menu.url}}</td>
+					<td>{{menu.createUser}}</td>
+					<td>{{menu.createTime}}</td>
+					<td>{{menu.updateUser}}</td>
+					<td>{{menu.updateTime}}</td>
+					<td>{{menu.remark}}</td>
+					<td>
+						<a href="#" title="详情" style="margin-left:10px;"><span class="glyphicon glyphicon-list-alt"></span></a>
+						<a href="#" title="修改" style="margin-left:10px;"><span class="glyphicon glyphicon-edit"></span></a>
+				      	<a href="#" title="删除" style="margin-left:10px;"><span class="glyphicon glyphicon-remove"></span></a> 
+					</td>
+				</tr> -->
+			</tbody>
+		</table>
+	</div>
+	
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+<script src="/static/js/vue/vue.js" type="text/javascript"></script>
+<script src="/static/js/vue/vue-resources.js" type="text/javascript"></script>
+<script src="/static/js/dist/util.js" type="text/javascript"></script>
+<script src="/static/js/dist/auth/menu.js" type="text/javascript"></script>
+</body>
+</html>

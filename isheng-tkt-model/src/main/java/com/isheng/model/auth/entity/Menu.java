@@ -28,6 +28,11 @@ public class Menu extends BaseEntity {
 
 	private long sort;
 	
+	private String remark;
+	
+	/**********中文展示 ****************/
+	private transient String menuTypeText;
+	
 	/** 页面是否被选中 */
 	private transient boolean checked;
 	
@@ -97,6 +102,22 @@ public class Menu extends BaseEntity {
 	public void setChildList(List<Menu> childList) {
 		this.childList = childList;
 	}
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
+	public String getMenuTypeText() {
+		return null != menuType ? menuType.getText() : "";
+	}
+
+	public void setMenuTypeText(String menuTypeText) {
+		this.menuTypeText = menuTypeText;
+	}
 
 	/** 
 	 * @see java.lang.Object#toString()
@@ -104,6 +125,7 @@ public class Menu extends BaseEntity {
 	@Override
 	public String toString() {
 		return "Menu [name=" + name + ", code=" + code + ", url=" + url + ", menuType=" + menuType + ", parentId="
-				+ parentId + ", sort=" + sort + ", checked=" + checked + "]";
+				+ parentId + ", sort=" + sort + ", remark=" + remark + ", menuTypeText=" + menuTypeText + "]";
 	}
+
 }
