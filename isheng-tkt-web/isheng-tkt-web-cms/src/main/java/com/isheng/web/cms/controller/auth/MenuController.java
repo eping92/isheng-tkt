@@ -45,14 +45,6 @@ public class MenuController extends AbstractBaseController {
 		};
 	}
 	
-//	@RequestMapping("/list")
-//	public ModelAndView list(MenuQuery menuQuery, @RequestParam(defaultValue="1")String pageNo, @RequestParam(defaultValue="10")String pageSize) {
-//		ModelAndView mv = new ModelAndView("/auth/menu/menu_list");
-//		Page<Menu> page = menuService.getPaging(menuQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
-//		mv.addObject("result", page);
-//		return mv;
-//	}
-	
 	@ResponseBody
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Object add(Menu menu) {
