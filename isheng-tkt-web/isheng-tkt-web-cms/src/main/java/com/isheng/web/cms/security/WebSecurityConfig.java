@@ -30,7 +30,7 @@ import org.springframework.core.annotation.Order;
  * @author Administrator
  * @version $Id: WebSecurityConfig.java 2018年9月9日 下午11:19:34 $
  */
-@Configuration
+//@Configuration
 public class WebSecurityConfig {
 	
 //	@Bean(name = "lifecycleBeanPostProcessor")

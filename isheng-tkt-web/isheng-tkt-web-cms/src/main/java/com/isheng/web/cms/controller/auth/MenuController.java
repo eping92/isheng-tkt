@@ -1,6 +1,7 @@
 package com.isheng.web.cms.controller.auth;
 
 import java.util.concurrent.Callable;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
-import com.isheng.common.model.Page;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.domain.SessionUser;
@@ -33,6 +31,23 @@ public class MenuController extends AbstractBaseController {
 	
 	@Reference
 	private MenuService menuService;
+	
+	/**
+	 * 加载用户的菜单树
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/menuTree")
+	public Callable<Object> menuTree(Model model) {
+//		SessionUser user = getCurrentUser();
+		return new Callable<Object>() {
+			@Override
+			public Object call() throws Exception {
+				//return menuService.getMenuTree(user.getUserId());
+				return menuService.getMenuTree(null);
+			}
+		};
+	}
 	
 	@ResponseBody
 	@RequestMapping("/list")
@@ -152,22 +167,6 @@ public class MenuController extends AbstractBaseController {
 		}
 	}
 	
-	/**
-	 * 加载权限信息
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("/load")
-	public Callable<Object> load(Model model) {
-		SessionUser user = getCurrentUser();
-		return new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				return menuService.getListByUserId(user.getUserId());
-			}
-		};
-	}
-
 	@Override
 	protected  ResultModel dataValid(Object object) {
 		ResultModel result = new ResultModel();

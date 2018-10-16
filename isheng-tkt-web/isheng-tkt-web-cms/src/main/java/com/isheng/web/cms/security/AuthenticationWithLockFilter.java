@@ -36,12 +36,12 @@ import com.isheng.web.cms.common.ContextUtil;
  */
 public class AuthenticationWithLockFilter extends FormAuthenticationFilter {
 	
-//	private static final Logger logger = LoggerFactory.getLogger(AuthenticationWithLockFilter.class);
-//	
-//	private long maxLoginAttempts = 10;
-//	
-//	public static ConcurrentHashMap<String, AtomicLong> accountLockMap = new ConcurrentHashMap<>();
-//
+	private static final Logger logger = LoggerFactory.getLogger(AuthenticationWithLockFilter.class);
+	
+	private long maxLoginAttempts = 10;
+	
+	public static ConcurrentHashMap<String, AtomicLong> accountLockMap = new ConcurrentHashMap<>();
+
 //	@Override
 //	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 //		Subject subject = getSubject(request, response);

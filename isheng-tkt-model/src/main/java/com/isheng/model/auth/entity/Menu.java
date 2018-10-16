@@ -31,13 +31,13 @@ public class Menu extends BaseEntity {
 	private String remark;
 	
 	/**********中文展示 ****************/
-	private transient String menuTypeText;
+	private String menuTypeText;
 	
 	/** 页面是否被选中 */
-	private transient boolean checked;
+	private boolean checked;
 	
 	/** 下级菜单 */
-	private transient List<Menu> childList;
+	private List<Menu> childList;
 
 	public String getName() {
 		return name;

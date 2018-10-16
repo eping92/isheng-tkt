@@ -28,6 +28,11 @@ import com.isheng.web.cms.common.UserToken;
 
 public class DefaultUserRealm extends AuthorizingRealm {
 
+	private static final Logger logger = LoggerFactory.getLogger(DefaultUserRealm.class);
+	
+	@Reference
+	private MenuService menuService;
+
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// TODO Auto-generated method stub
@@ -40,11 +45,6 @@ public class DefaultUserRealm extends AuthorizingRealm {
 		return null;
 	}
 	
-//	private static final Logger logger = LoggerFactory.getLogger(DefaultUserRealm.class);
-//	
-//	@Reference
-//	private MenuService menuService;
-//	
 //	/**
 //	 * 认证回调函数,登录时调用.
 //	 * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)

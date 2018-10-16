@@ -112,4 +112,51 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		}
 	}
 
+	@Override
+	public List<Menu> getMenuTree(String userId) throws BizException {
+		List<Menu> list = this.getAll();//getListByUserId(userId);
+		if (null == list || list.isEmpty()) {
+			return new ArrayList<>(0);
+		}
+		
+		//得到用户的所有一级权限
+		List<Menu> roots = new ArrayList<>();
+		for (Menu menu : list) {
+			if (MenuType.ROOT == menu.getMenuType()) {
+				roots.add(menu);
+			}
+		}
+		
+		//得到下级权限
+		for (Menu menu : roots) {
+			menu.setChildList(this.getChilds(menu.getId(), list));
+		}
+		
+		return roots;
+	}
+	
+	/**
+	 * 递归循环出子菜单
+	 * 
+	 * @param id
+	 * @param roots
+	 * @return
+	 */
+	private List<Menu> getChilds(String id, List<Menu> list) {
+		List<Menu> childs = new ArrayList<>();
+		for (Menu m : list) {
+			if (StringUtils.isNoneBlank(id) && id.equals(m.getParentId())) {
+				childs.add(m);
+			}
+		}
+		
+		//循环子菜单的子菜单
+		for (Menu m : childs) {
+			if (StringUtils.isBlank(m.getUrl())) {
+				m.setChildList(getChilds(m.getId(), list));
+			}
+		}
+		
+		return childs;
+	}
 }

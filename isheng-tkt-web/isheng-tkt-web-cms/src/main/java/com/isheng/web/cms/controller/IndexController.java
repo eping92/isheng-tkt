@@ -108,13 +108,31 @@ public class IndexController extends AbstractBaseController {
 		return result.setCode(ErrMsg.SUCCESS.getCode()).setMsg("退出成功").addData(SysConfig.GOTO_KEY, "index");
 	}
 	
+	/**
+	 * 加载导航菜单
+	 * 
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/loadMenus")
+	public Object loadMenu() {
+		List<Menu> list = null;
+//		Object obj = ContextUtil.getSessionAttr(SysConfig.MENU_USER_KEY);
+//		if (null != obj) {
+//			list = (List<Menu>)list;
+//		} else {
+			list = this.initMenu();
+//		}
+		return list;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	@Async
-	private void initMenu() {
+	private List<Menu> initMenu() {
 		HttpSession session = ContextUtil.getHttpSession();
 		if (null == session) {
-			return;
+			return new ArrayList<>();
 		}
 		
 		List<Menu> roots = null;//一级菜单
@@ -124,7 +142,7 @@ public class IndexController extends AbstractBaseController {
 		
 		roots = (List<Menu>) ContextUtil.getSessionAttr(SysConfig.MENU_ROOT_KEY);
 		if (null != roots && !roots.isEmpty()) {
-			return;
+			return new ArrayList<>();
 		}
 		
 		List<Menu> all = menuService.getAll();
@@ -159,6 +177,7 @@ public class IndexController extends AbstractBaseController {
 			userMenus = menuService.getListByUserId(userId);
 			ContextUtil.setSessionAttr(SysConfig.MENU_USER_KEY, userMenus);
 		}
+		return userMenus;
 	}
 	
 }
