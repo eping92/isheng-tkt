@@ -16,6 +16,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		<result property="menuType" 	column="menuType"		typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
 		<result property="parentId" 	column="parentId"		jdbcType="VARCHAR" />
 		<result property="sort" 		column="sort" 			jdbcType="NUMERIC" />
+		<result property="remark" 		column="remark" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- 结果字段 -->
@@ -30,7 +31,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		url, 
 		menuType, 
 		parentId, 
-		sort
+		sort,
+		remark
 	</sql>
 	
 	<sql id="insertSql">
@@ -44,7 +46,8 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		#{url}, 
 		#{menuType}, 
 		#{parentId}, 
-		#{sort} 
+		#{sort},
+		#{remark}
 	</sql>
 	
 	<!-- 更新字段 -->
@@ -80,13 +83,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			<if test="sort > 0">
 				sort = #{sort},
 			</if>
+			<if test="sort > 0">
+				remark = #{remark},
+			</if>
 		</trim>
 	</sql>
 	
 	<!-- 查询语句 -->
 	<sql id="querySql">
 		<where>
-			<if test="id != null">
+			<!-- <if test="id != null">
 				and id = #{id}
 			</if>
 			<if test="createUser != null">
@@ -113,7 +119,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			</if>
 			<if test="parentId != null">
 				and parentId = #{parentId}
-			</if>
+			</if> -->
 		</where>
 	</sql>
 	
@@ -153,7 +159,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 分页查询 -->
-	<select id="selectLimit" parameterType="com.isheng.model.auth.request.MenuQuery" resultMap="mapperResultMap" timeout="3000">
+	<select id="selectLimit" resultMap="mapperResultMap" timeout="3000">
 		select <include refid="columnSql"/> from menu <include refid="querySql"/> order by sort ASC limit #{pageNo}, #{pageSize}
 	</select>
 	

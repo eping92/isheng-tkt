@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<table class="table table-bordered table-hover table-striped">
+	<caption>菜单列表</caption>
+	<thead>
+		<tr>
+			<th><input type="checkbox"></th>
+			<th>名称</th>
+			<th>类型</th>
+			<th>权限码</th>
+			<th>地址</th>
+			<th>创建人</th>
+			<th>创建时间</th>
+			<th>更新人</th>
+			<th>更新时间</th>
+			<th>描述</th>
+			<th>操作</th>
+		</tr>
+	</thead>
+	<tbody th:if="${null != result && null != result.data}">
+		<tr th:each="menu, stat : ${result.data}">
+			<td><input type="checkbox"></td>
+			<td th:text="${menu.name}">菜单名称</td>
+			<td th:text="${menu.menuTypeText}">菜单类型</td>
+			<td th:text="${menu.code}">识别码</td>
+			<td th:text="${menu.url}">地址URL</td>
+			<td th:text="${menu.createUser}">创建人</td>
+			<td th:text="${#dates.format(menu.createTime, 'yyyy-MM-dd HH:mm:ss')}">创建时间</td>
+			<td th:text="${menu.updateUser}">更新人</td>
+			<td th:text="${#dates.format(menu.updateTime, 'yyyy-MM-dd HH:mm:ss')}">更新时间</td>
+			<td th:text="${menu.remark}">备注说明</td>
+			<td>
+				<a href="#" title="详情" style="margin-left: 10px;"><span class="glyphicon glyphicon-list-alt"></span></a> 
+				<a href="#" title="修改" style="margin-left: 10px;"><span class="glyphicon glyphicon-edit"></span></a> 
+				<a href="#" title="删除" style="margin-left: 10px;"><span class="glyphicon glyphicon-remove"></span></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</html>

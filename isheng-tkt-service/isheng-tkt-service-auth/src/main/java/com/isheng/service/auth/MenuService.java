@@ -46,4 +46,13 @@ public interface MenuService extends BaseService<Menu, MenuQuery>{
 	 */
 	List<Menu> getListByRoles(List<Role> roles) throws BizException;
 	
+	/**
+	 * 
+	 * 得到某个用户的权限数
+	 * @param userId
+	 * @return
+	 * @throws BizException
+	 */
+	public List<Menu> getMenuTree(String userId) throws BizException;
+	
 }
