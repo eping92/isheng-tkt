@@ -40,7 +40,7 @@ public class MenuServiceImpl extends AbstractBaseService<Menu, MenuQuery> implem
 		String id = "";
 		try {
 			long nextSort = (menu.getSort() > 0) ? menu.getSort() : this.getNextSort(menu.getParentId(), menu.getMenuType());
-			String code = WebUtil.parentUri(menu.getUrl());//如：/menu/add改成menu:add
+			String code = WebUtil.paresUri(menu.getUrl());//如：/menu/add改成menu:add
 			menu.setSort(nextSort);
 			menu.setCode(code);
 			id = menuDao.save(menu);
