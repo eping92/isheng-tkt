@@ -1,46 +1,28 @@
-layui.use('element', function() {
-	var element = layui.element;
-});
-
-/**  请求地址 */
-var URL = {
-		login: "/login",//登录
-		logout: "/logout"//登出
-};
+/************************* 首页js ******************************/
+if (!INDEX) {
+	var INDEX = {};
+}
 
 /**
- * index vue mount
+ * 数据请求url
  */
-var MAIN = new Vue({
-	el : '#main',
-	data : {
-		loginName : '何平波'
-	},
-	methods:{
-		login: function() {
-			this.$http({
-				method: METHOD.post,
-				url: URL.login,
-				params:{
-					loginName: "eping92", 
-					pwd: "123456"
-				}
-			}).then(function(response) {
-				alert(responseMsg(response));
-			}),function(err) {
-				alert(toString(err));
-			}
-			
-		},
-		logout: function() {
-			this.$http({
-				url: URL.logout,
-			}).then(function(response) {
-				alert(responseMsg(response));
-			}),function(err){
-				alert(err);
-			}
-		}
-	}
-});
+INDEX.url = {
+	login: "/login",
+	loadMenu: "/loadMenu"
+}
 
+/**
+ * 加载左侧菜单
+ * @returns
+ */
+function loadMenu() {
+	$.post(INDEX.url.loadMenu, function(data) {
+		$("#_left").html(data);
+	}).fail(function() {
+		
+	});
+}
+
+$(function() {
+	loadMenu();
+})
