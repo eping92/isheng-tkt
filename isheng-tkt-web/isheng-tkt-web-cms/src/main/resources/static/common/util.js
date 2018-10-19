@@ -1,9 +1,4 @@
-/** http请求类型 */
-var httpMethod = {
-		post: 'POST',
-		get: 'get'
-};
-
+/********************** 全局工具类 ******************/
 /** json转字符串 */
 function toString(jsonData) {
 	if (jsonData) {
@@ -18,34 +13,6 @@ function toJson(strData) {
 		return JSON.parse(strData);
 	}
 };
-
-/** post请求 */
-function httpPost(_url, _params) {
-	this.$http({
-		method: httpMethod.post,
-		url: _url,
-		params: _params
-	}).then(function(result) {
-		return result;
-		
-	}), function(err) {
-		console.log(err);
-	}
-};
-
-/** get请求 */
-function httpGet(_url, _params) {
-	this.$http({
-		method: httpMethod.get,
-		url: _url,
-		params: _params
-	}).then(function(result) {
-		return result;
-		
-	}), function(err) {
-		console.log(err);
-	}
-}
 
 /**
  * 后台封装的相应消息
@@ -76,6 +43,40 @@ function responseCode (response) {
 }
 
 /**
+ * post请求
+ * @param _url
+ * @param _params
+ * @returns
+ */
+function httpPost(_url, _params) {
+	var params = _params || {};
+	$.post(_url, {
+		params: JSON.stringify(params);
+	}).done(function(data) {
+		return data;
+	}).fail(function() {
+		return null;
+	});
+}
+
+/**
+ * get请求
+ * @param _url
+ * @param _params
+ * @returns
+ */
+function httpGet(_url, _params) {
+	var params = _params || {};
+	$.get(_url, {
+		params: JSON.stringify(params);
+	}).done(function(data) {
+		return data;
+	}).fail(function() {
+		return null;
+	});
+}
+
+/**
  * 后台是否处理成功
  * @param response
  * @returns {Boolean}
@@ -84,7 +85,3 @@ function isSuccess(response) {
 	var code = responseCode(response);
 	return "9999" == code;
 }
-
-$(function() {
-	alert(1);
-})

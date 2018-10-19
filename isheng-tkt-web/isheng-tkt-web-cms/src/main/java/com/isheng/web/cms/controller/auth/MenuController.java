@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.enums.ErrMsg;
 import com.isheng.common.exception.BizException;
+import com.isheng.common.model.Page;
 import com.isheng.common.model.ResultModel;
 import com.isheng.common.util.ObjUtil;
 import com.isheng.model.auth.domain.SessionUser;
@@ -29,8 +32,22 @@ public class MenuController extends AbstractBaseController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	
+	private static final String PATH_PREFIX = "/auth/menu/";
+	
 	@Reference
 	private MenuService menuService;
+	
+	/**
+	 * 权限管理首页
+	* @Title: index
+	* @param @return    
+	* @return String    
+	* @throws
+	 */
+	@RequestMapping("/index")
+	public String index() {
+		return PATH_PREFIX + "menuIndex";
+	}
 	
 	/**
 	 * 加载用户的菜单树
@@ -49,15 +66,13 @@ public class MenuController extends AbstractBaseController {
 		};
 	}
 	
-	@ResponseBody
 	@RequestMapping("/list")
-	public Callable<Object> list(MenuQuery menuQuery, @RequestParam(defaultValue="1")String pageNo, @RequestParam(defaultValue="10")String pageSize) {
-		return new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				return menuService.getPaging(menuQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
-			}
-		};
+	public ModelAndView list(MenuQuery menuQuery, @RequestParam(defaultValue="1")String pageNo, @RequestParam(defaultValue="10")String pageSize) {
+		ModelAndView mv = new ModelAndView();
+		Page<Menu> page = menuService.getPaging(menuQuery, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+		mv.addObject("result", page);
+		mv.setViewName(PATH_PREFIX + "list");
+		return mv;
 	}
 	
 	@ResponseBody

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.isheng.common.constant.SysConfig;
@@ -113,17 +114,17 @@ public class IndexController extends AbstractBaseController {
 	 * 
 	 * @return
 	 */
-	@ResponseBody
-	@RequestMapping("/loadMenus")
-	public Object loadMenu() {
-		List<Menu> list = null;
-//		Object obj = ContextUtil.getSessionAttr(SysConfig.MENU_USER_KEY);
-//		if (null != obj) {
-//			list = (List<Menu>)list;
-//		} else {
-			list = this.initMenu();
-//		}
-		return list;
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/loadMenu")
+	public ModelAndView loadMenu() {
+		ModelAndView mv = new ModelAndView();
+		List<Menu> list = ContextUtil.getSessionAttr(SysConfig.MENU_USER_KEY, List.class);
+		if (null == list || list.isEmpty()) {
+			list = menuService.getMenuTree(null);//this.initMenu();
+		}
+		mv.setViewName("/layout/left");
+		mv.addObject("menuList", list);
+		return mv;
 	}
 	
 	

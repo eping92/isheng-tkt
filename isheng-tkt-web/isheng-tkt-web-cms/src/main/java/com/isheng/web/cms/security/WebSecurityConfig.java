@@ -30,84 +30,86 @@ import org.springframework.core.annotation.Order;
  * @author Administrator
  * @version $Id: WebSecurityConfig.java 2018年9月9日 下午11:19:34 $
  */
-//@Configuration
+@Configuration
 public class WebSecurityConfig {
 	
-//	@Bean(name = "lifecycleBeanPostProcessor")
-//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-//        return new LifecycleBeanPostProcessor();
-//    }
-//	
-//	@Bean(name = "shiroRealm")
-//	@DependsOn("lifecycleBeanPostProcessor")
-//    public DefaultUserRealm shiroRealm() {
-//		DefaultUserRealm realm = new DefaultUserRealm(); 
-//        return realm;
-//    }
-//	
-//	@Bean(name = "ehCacheManager")
-//	@DependsOn("lifecycleBeanPostProcessor")
-//	public EhCacheManager ehCacheManager(){
-//		EhCacheManager ehCacheManager = new EhCacheManager();
-//		return ehCacheManager;
-//	}
-//	
-//	@Bean(name = "securityManager")
-//	public DefaultWebSecurityManager securityManager(){
-//		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-//		securityManager.setRealm(shiroRealm());
-//		securityManager.setCacheManager(ehCacheManager());
-//		return securityManager;
-//	}
-//
-//	@Order(1)
-//	@Bean(name = "shiroFilter")
-//	public ShiroFilterFactoryBean shiroFilterFactoryBean(){
-//		WebSecurityManager securityManager = securityManager();
-//		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-//		shiroFilterFactoryBean.setSecurityManager(securityManager);
-//		SecurityUtils.setSecurityManager(securityManager);
-//		
-//		Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-//		LogoutFilter logoutFilter = new LogoutFilter();
-//		logoutFilter.setRedirectUrl("/");
-//		filters.put("logout", logoutFilter);
-//		
-//		AuthenticationWithLockFilter formFilter = new AuthenticationWithLockFilter();
-//		formFilter.setMaxLoginAttempts(3);
-//		filters.put("authc", formFilter);
-//		shiroFilterFactoryBean.setFilters(filters);
-////		formFilter.setValueoptService(valueoptService);
-//		
-//		Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
-//		filterChainDefinitionManager.put("/favicon.ico", "anon");
-//		filterChainDefinitionManager.put("/static/**", "anon");
-//		filterChainDefinitionManager.put("/", "anon");
-//		filterChainDefinitionManager.put("/login", "anon");
-//		filterChainDefinitionManager.put("/logout", "anon");
-//		
+	@Bean(name = "lifecycleBeanPostProcessor")
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+	
+	@Bean(name = "shiroRealm")
+	@DependsOn("lifecycleBeanPostProcessor")
+    public DefaultUserRealm shiroRealm() {
+		DefaultUserRealm realm = new DefaultUserRealm(); 
+        return realm;
+    }
+	
+	@Bean(name = "ehCacheManager")
+	@DependsOn("lifecycleBeanPostProcessor")
+	public EhCacheManager ehCacheManager(){
+		EhCacheManager ehCacheManager = new EhCacheManager();
+		return ehCacheManager;
+	}
+	
+	@Bean(name = "securityManager")
+	public DefaultWebSecurityManager securityManager(){
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		securityManager.setRealm(shiroRealm());
+		securityManager.setCacheManager(ehCacheManager());
+		return securityManager;
+	}
+
+	@Order(1)
+	@Bean(name = "shiroFilter")
+	public ShiroFilterFactoryBean shiroFilterFactoryBean(){
+		WebSecurityManager securityManager = securityManager();
+		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+		shiroFilterFactoryBean.setSecurityManager(securityManager);
+		SecurityUtils.setSecurityManager(securityManager);
+		
+		Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+		LogoutFilter logoutFilter = new LogoutFilter();
+		logoutFilter.setRedirectUrl("/");
+		filters.put("logout", logoutFilter);
+		
+		AuthenticationWithLockFilter formFilter = new AuthenticationWithLockFilter();
+		formFilter.setMaxLoginAttempts(3);
+		filters.put("authc", formFilter);
+		shiroFilterFactoryBean.setFilters(filters);
+//		formFilter.setValueoptService(valueoptService);
+		
+		Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
+		filterChainDefinitionManager.put("/favicon.ico", "anon");
+		filterChainDefinitionManager.put("/static/**", "anon");
+		filterChainDefinitionManager.put("/", "anon");
+		filterChainDefinitionManager.put("/login", "anon");
+		filterChainDefinitionManager.put("/logout", "anon");
+		
+		filterChainDefinitionManager.put("/**", "anon");
+		
 //		filterChainDefinitionManager.put("/**", "authc");
-//		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
-//		
-//		shiroFilterFactoryBean.setLoginUrl("/");
-//		shiroFilterFactoryBean.setSuccessUrl("/");
-//		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
-//		
-//		return shiroFilterFactoryBean;
-//	}
-//
-//	@Bean
-//	@ConditionalOnMissingBean
-//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-//        DefaultAdvisorAutoProxyCreator proxy = new DefaultAdvisorAutoProxyCreator();
-//        proxy.setProxyTargetClass(true);
-//        return proxy;
-//    }
-//	
-//	@Bean
-//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
-//        AuthorizationAttributeSourceAdvisor sourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-//        sourceAdvisor.setSecurityManager(securityManager());
-//        return sourceAdvisor;
-//    }
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionManager);
+		
+		shiroFilterFactoryBean.setLoginUrl("/");
+		shiroFilterFactoryBean.setSuccessUrl("/");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+		
+		return shiroFilterFactoryBean;
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator proxy = new DefaultAdvisorAutoProxyCreator();
+        proxy.setProxyTargetClass(true);
+        return proxy;
+    }
+	
+	@Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor sourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+        sourceAdvisor.setSecurityManager(securityManager());
+        return sourceAdvisor;
+    }
 }

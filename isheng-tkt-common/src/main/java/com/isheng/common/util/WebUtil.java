@@ -161,7 +161,10 @@ public final class WebUtil {
 	 * @param uri
 	 * @return
 	 */
-	public static String parentUri(String uri) {
+	public static String paresUri(String uri) {
+		if (null == uri) {
+			return "";
+		}
 		if (uri.contains(".")) {
 			uri = uri.substring(0, uri.indexOf("."));
 		}
