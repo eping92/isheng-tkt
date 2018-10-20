@@ -1,5 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div class="accordion" id="menu-62" style="display: none;">
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse"
+         data-parent="#menu-2" data-href="#collapse-3" href="#collapse-3"
+         title="">
+         <i class="icon-chevron-right"></i>&nbsp;系统设置
+      </a>
+    </div>
+    <div id="collapse-3" class="accordion-body collapse ">
+      <div class="accordion-inner">
+        <ul class="nav nav-list">
+          <li>
+          	<a data-href=".menu3-4" href="/jeesite/a/sys/menu/" target="mainFrame">
+          		<i class="icon-list-alt"></i>&nbsp;菜单管理
+          	</a>
+            <ul class="nav nav-list hide" style="margin: 0; padding-right: 0;">
+
+
+            </ul>
+          </li>
+
+
+          <li>
+          	<a data-href=".menu3-7" href="/jeesite/a/sys/role/" target="mainFrame">
+          		<i class="icon-lock"></i>&nbsp;角色管理
+            </a>
+            <ul class="nav nav-list hide" style="margin: 0; padding-right: 0;">
+            
+            </ul>
+          </li>
+
+          <li>
+          	<a data-href=".menu3-10" href="/jeesite/a/sys/dict/" target="mainFrame">
+          		<i class="icon-th-list"></i>&nbsp;字典管理
+          	</a>
+            <ul class="nav nav-list hide" style="margin: 0; padding-right: 0;">
+
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="accordion" id="menu-b4b42c3336de46238a3e3612b0d7b39f">
+ <div class="accordion-group">
+   <div class="accordion-heading">
+     <a class="accordion-toggle" data-toggle="collapse" data-parent="#menu-b4b42c3336de46238a3e3612b0d7b39f" 
+     	 data-href="#collapse-3fbde454a450417b9deb702a19837ab0"
+        href="#collapse-3fbde454a450417b9deb702a19837ab0" title="系统消息">
+        <i class="icon-chevron-down"></i>&nbsp;系统消息
+      </a>
+   </div>
+   <div id="collapse-3fbde454a450417b9deb702a19837ab0" class="accordion-body collapse in">
+     <div class="accordion-inner">
+       <ul class="nav nav-list">
+         <li class="active">
+         	<a data-href=".menu3-dd345ce6d1ba44798bd5138207cb2b88" href="/jeesite/a/msg/msgSys" target="mainFrame">
+         		<i class="icon-circle-arrow-right icon-white"></i>&nbsp;消息列表
+         	</a>
+           <ul class="nav nav-list hide" style="margin: 0; padding-right: 0;">
+           
+           </ul>
+         </li>
+       </ul>
+     </div>
+   </div>
+ </div>
+</div>
+</html>
+
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <ul id="main-nav" class="main-nav nav nav-tabs nav-stacked" style="">
 	<li>
 		<a href="http://localhost:8881">
@@ -11,9 +94,9 @@
 			<i class="glyphicon glyphicon-cog" th:text="${menu.name}"></i>
 			<span class="pull-right glyphicon glyphicon-chevron-toggle"></span>
 		</a>
-		<ul th:id="${menu.id}" class="nav nav-list secondmenu collapse" style="height: 0px;">
-			<li th:each="child : ${menu.childList}">
-				<a th:href="${child.url}" th:text="${child.name}" target="mainFrame">
+		<ul th:id="${menu.id}" class="nav nav-list secondmenu collapse in" style="height: 0px;">
+			<li th:each="child : ${menu.childList}" th:attr="url=${child.url}">
+				<a href="javascript:void();" th:text="${child.name}" target="mainFrame">
 					<i class="glyphicon glyphicon-user"></i>
 				</a>
 			</li>
@@ -26,4 +109,5 @@
 		</a>
 	</li>
 </ul>
-</html>
+</html> 
+-->

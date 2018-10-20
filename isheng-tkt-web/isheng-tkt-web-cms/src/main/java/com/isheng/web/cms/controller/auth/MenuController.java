@@ -1,12 +1,9 @@
 package com.isheng.web.cms.controller.auth;
 
-import java.util.concurrent.Callable;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,23 +44,6 @@ public class MenuController extends AbstractBaseController {
 	@RequestMapping("/index")
 	public String index() {
 		return PATH_PREFIX + "menuIndex";
-	}
-	
-	/**
-	 * 加载用户的菜单树
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping("/menuTree")
-	public Callable<Object> menuTree(Model model) {
-//		SessionUser user = getCurrentUser();
-		return new Callable<Object>() {
-			@Override
-			public Object call() throws Exception {
-				//return menuService.getMenuTree(user.getUserId());
-				return menuService.getMenuTree(null);
-			}
-		};
 	}
 	
 	@RequestMapping("/list")
